@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="mk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гастрономија | Feel Pehcevo</title>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: #0a2717;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- HERO (Ист како Acomodation) --- */
+        .hero-page {
+            position: relative !important;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('img/gastronomyhero.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            height: 500px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+        }
+
+        .hero-page h1 {
+            font-size: 75px;
+            text-transform: uppercase;
+            margin: 0;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .hero-page p {
+            font-size: 20px;
+            color: #ccc;
+            margin-top: 15px;
+            max-width: 800px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #e8c547;
+            cursor: pointer;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .scroll-indicator i {
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* --- GRID --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            padding: 60px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+            background: #000;
+            cursor: pointer;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s ease;
+        }
+
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            border-top: 2px solid #e8c547;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: 0.5s ease;
+            box-sizing: border-box;
+            z-index: 2;
+       background: rgba(5, 18, 12, 0.72);
+    backdrop-filter: blur(10px);
+
+
+        }
+
+        .card:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.4);
+        }
+
+        .card:hover .card-content {
+            height: 100%;
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(12px);
+        }
+  
+         .card:hover h3 {
+            color: #e8c547;
+            margin-bottom: 15px;
+        }
+        .card h3 {
+            font-size: 1.25rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .card p {
+            font-family: "Times New Roman", Times, serif !important;
+            font-size: 1rem !important;
+            color: #ccc;
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            transition: 0.4s ease;
+            transform: translateY(20px);
+            visibility: hidden;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+       .card:hover p {
+          text-align: center;
+            opacity: 1;
+            height: auto;
+            visibility: visible;
+            margin: 15px 0 20px;
+            padding: 0 20px 40px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #e8c547;
+            border: 1px solid #e8c547;
+            padding: 10px 22px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            font-size: 0.75rem;
+        }
+
+        .card:hover .btn-outline { opacity: 1; visibility: visible; }
+        .btn-outline:hover { background: #e8c547; color: #000; }
+
+        /* --- MODAL (Ист како Acomodation) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-container {
+            background: #0d1414;
+            width: 95%;
+            max-width: 1100px;
+            height: 600px;
+            display: flex;
+            position: relative;
+            border: 1px solid #1a2a2a;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 32px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-modal:hover { color: #e8c547; transform: rotate(90deg); }
+
+        .modal-left {
+            width: 45%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .main-img-box { width: 100%; height: 65%; overflow: hidden; cursor: zoom-in; }
+        .main-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .thumb-grid {
+            width: 100%;
+            height: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            padding: 8px;
+            box-sizing: border-box;
+            background: #000;
+        }
+
+        .thumb-grid img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .thumb-grid img:hover, .thumb-grid img.active { opacity: 1; border: 1px solid #e8c547; }
+
+        .modal-right {
+            background: #0a2717;
+            width: 55%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .modal-right h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin: 0 0 20px 0;
+        }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .info-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-left: 3px solid #e8c547;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-item i { color: #e8c547; font-size: 1rem; width: 20px; text-align: center; }
+        .info-item div { display: flex; flex-direction: column; }
+        .info-item span { color: #888; font-size: 0.6rem; text-transform: uppercase; font-weight: 700; }
+        .info-item strong { color: #fff; font-size: 0.8rem; font-weight: 400; }
+
+        .contact-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: auto 0;
+            width: 100%;
+        }
+
+        .c-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(232, 197, 71, 0.1);
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .c-card:hover { background: rgba(232, 197, 71, 0.05); border-color: #e8c547; padding-left: 35px; }
+        .c-card i { color: #e8c547; font-size: 1.1rem; flex-shrink: 0; }
+        .c-card p { margin: 0; font-size: 0.85rem; color: #ccc; letter-spacing: 0.5px; }
+
+        .action-area { display: flex; align-items: center; gap: 15px; margin-top: 10px; }
+        .icon-box { width: 55px; height: 55px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; color: #e8c547; font-size: 1.4rem; }
+        .btn-reserve { background: #e8c547; color: #000; border: none; height: 55px; font-weight: 800; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; cursor: pointer; width: 100%; transition: 0.3s; }
+        .btn-reserve:hover { background: #fff; }
+
+        @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) {
+            .hero-page h1 { font-size: 45px; }
+            .hero-page p { font-size: 16px; }
+            .modal-container { flex-direction: column; height: auto; max-height: 90vh; overflow-y: auto; }
+            .modal-left, .modal-right { width: 100%; }
+            .modal-left { height: 350px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+          <div class="container nav">
+            <div class="logo">
+                <img src="img/logofooter.png" alt="">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Дома</a></li>
+                    <li><a href="acomodation.html">Сместување</a></li>
+                    <li><a href="gastronomy.html" class="active">Гастрономија</a></li>
+                    <li><a href="activities.html">Активности</a></li>
+                    <li><a href="localorigin.html">Продукти</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-page">
+        <h1>Гастрономија</h1>
+        <p>Уживајте во автентичните вкусови и традиционалните пехчевски специјалитети.</p>
+        <a href="#content" class="scroll-indicator">
+            <span>Истражи</span>
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <section id="content">
+        <div class="grid">
+            <article class="card">
+                <img src="img/tropik-1.jpg">
+                <div class="card-content">
+                    <h3>Ресторан Тропик</h3>
+                    <p>Врвна услуга и најдобрата пастрмка во регионот.</p>
+                    <button class="btn-outline" onclick="openModal(this)" data-title="Ресторан Тропик"
+                        data-work="08:00 - 00:00" data-terace="Покриена" data-card="Кеш / Картичка"
+                        data-cuisine="Риба / Скара / Традиционална" data-loc="ул. Орце Николов, Пехчево"
+                        data-tel="+389 71 326 662"
+                        data-imgs="img/tropik-1.jpg,img/tropik2.jpg,img/tropik3.jpg,img/tropik4.jpg,img/tropik5.jpg,img/tropik6.jpg">Дознај
+                        повеќе</button>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="img/Viktorija-3.jpg">
+                <div class="card-content">
+                    <h3>Ресторан Викторија</h3>
+                    <p>Автентична македонска кујна во срцето на градот.</p>
+                    <button class="btn-outline" onclick="openModal(this)" data-title="Ресторан Викторија"
+                        data-work="08:00 - 00:00" data-terace="Покриена" data-card="Кеш / Картичка"
+                        data-cuisine="Чорби / Скара / Tрадиционална" data-loc="ул. Истра, Пехчево"
+                        data-tel="+389 33 511 961"
+                        data-imgs="img/v4.jpeg,img/v2.jpeg,img/v6.jpeg,img/v1.jpeg,img/v5.jpeg,img/v3.jpeg">Дознај
+                        повеќе</button>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="img/ristovo.webp">
+                <div class="card-content">
+                    <h3>Ристово Меанче</h3>
+                    <p>Уживајте во традиционалните пехчевски специјалитети.</p>
+                    <button class="btn-outline" onclick="openModal(this)" data-title="Ристово Меанче"
+                        data-work="08:00 - 23:00" data-terace="Отворена" data-card="Кеш / Картичка"
+                        data-cuisine="Домашни јадења / Скара" data-loc="ул. Маршал Тито, Пехчево"
+                        data-tel="+389 33 441 440"
+                        data-imgs="img/r1.jpg,img/r2.jpg,img/r3.jpg,img/r4.jpg,img/r5.jpg,img/r6.jpg">Дознај
+                        повеќе</button>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="img/goldsendvicara.jpeg">
+                <div class="card-content">
+                    <h3>Сендвичара Голд</h3>
+                    <p>Највкусната брза храна за секој дел од денот.</p>
+                    <button class="btn-outline" onclick="openModal(this)" data-title="Сендвичара Голд"
+                        data-work="08:00 - 00:00" data-terace="Нема" data-card="Само кеш" data-cuisine="Бургери / Тостови"
+                        data-loc="ул.Даме Груев, Пехчево" data-tel="+389 78 123 321"
+                        data-imgs="img/a1.jpg,img/a2.jpg,img/a3.jpg,img/a4.jpg,img/a5.jpg,img/a6.jpg">Дознај
+                        повеќе</button>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <div id="gModal" class="modal-overlay">
+        <div class="modal-container">
+            <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-left">
+                <div class="main-img-box" onclick="toggleZoom(true)"><img src="" id="mImg"></div>
+                <div class="thumb-grid" id="mThumbs"></div>
+            </div>
+            <div class="modal-right">
+                <h2 id="mTitle"></h2>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div><span>Работно</span><strong id="mWork"></strong></div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-couch"></i>
+                        <div><span>Тераса</span><strong id="mTerace"></strong></div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-credit-card"></i>
+                        <div><span>Плаќање</span><strong id="mCard"></strong></div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-utensils"></i>
+                        <div><span>Кујна</span><strong id="mCuisine"></strong></div>
+                    </div>
+                </div>
+                
+                <div class="contact-row">
+                    <div class="c-card"><i class="fas fa-phone"></i><p id="mTel"></p></div>
+                    <div class="c-card"><i class="fas fa-map-marker-alt"></i><p id="mLoc"></p></div>
+                </div>
+
+                <div class="action-area">
+                    <div class="icon-box"><i class="fas fa-utensils"></i></div>
+                    <button class="btn-reserve">Резервирај маса</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="zoomOverlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:10001; display:none; justify-content:center; align-items:center; cursor:zoom-out;" onclick="toggleZoom(false)">
+        <img src="" id="zoomImg" style="max-width:90%; max-height:90%; object-fit:contain;">
+    </div>
+
+    <script>
+        function openModal(btn) {
+            const modal = document.getElementById('gModal');
+            document.getElementById('mTitle').innerText = btn.dataset.title;
+            document.getElementById('mWork').innerText = btn.dataset.work;
+            document.getElementById('mTerace').innerText = btn.dataset.terace;
+            document.getElementById('mCard').innerText = btn.dataset.card;
+            document.getElementById('mCuisine').innerText = btn.dataset.cuisine;
+            document.getElementById('mLoc').innerText = btn.dataset.loc;
+            document.getElementById('mTel').innerText = btn.dataset.tel;
+
+            const imgs = btn.dataset.imgs.split(',');
+            document.getElementById('mImg').src = imgs[0];
+            document.getElementById('zoomImg').src = imgs[0];
+
+            const thumbsBox = document.getElementById('mThumbs');
+            thumbsBox.innerHTML = '';
+            imgs.slice(0, 6).forEach((img, index) => {
+                const imgEl = document.createElement('img');
+                imgEl.src = img;
+                if (index === 0) imgEl.classList.add('active');
+                imgEl.onclick = function () {
+                    document.getElementById('mImg').src = this.src;
+                    document.getElementById('zoomImg').src = this.src;
+                    document.querySelectorAll('.thumb-grid img').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                };
+                thumbsBox.appendChild(imgEl);
+            });
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('gModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function toggleZoom(show) {
+            const zoom = document.getElementById('zoomOverlay');
+            zoom.style.display = show ? 'flex' : 'none';
+        }
+        
+        window.onclick = (e) => { if(e.target.id == 'gModal') closeModal(); }
+    </script>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="mk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feel Pehčevo | Услуги</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --gold: #e8c547;
+            --white: #ffffff;
+            --border: rgba(255, 255, 255, 0.1);
+            --bg-dark: #05080a;
+            --modal-bg: #0d1414;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0a2717;
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- HEADER (GLASS STYLE) --- */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border);
+            background: rgba(8, 18, 16, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .header .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header .nav .logo h2 {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--white);
+        }
+
+        .header .nav .logo h2 span {
+            color: var(--gold);
+        }
+
+        .header .nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .header .nav ul li a {
+            text-decoration: none;
+            font-family: 'Times New Roman', Times, serif;
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .header .nav ul li a:hover,
+        .header .nav ul li a.active {
+            color: var(--gold);
+        }
+
+        /* --- SERVICES SECTION --- */
+        .services-section {
+            padding: 180px 0 100px;
+        }
+
+        .section-title-wrap {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .sub-title {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 7px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+
+        .main-title span {
+            color: var(--gold);
+        }
+
+        .services-modern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+        }
+
+        .service-horizontal-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            cursor: pointer;
+            transition: 0.4s ease;
+        }
+
+        .service-horizontal-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .service-vector-space {
+            width: 50px;
+            margin-right: 25px;
+            flex-shrink: 0;
+        }
+
+        .service-vector-space img {
+            width: 100%;
+            filter: invert(83%) sepia(21%) saturate(1028%) hue-rotate(1deg) brightness(95%) contrast(92%);
+        }
+
+        .service-info h3 {
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        /* НОВИОТ СТИЛ ЗА ТЕКСТОТ ПОД НАСЛОВОТ */
+        .service-info p {
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: 400;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            /* Прилагодено од 1pc за подобра читливост */
+            color: #a0a0a0;
+            text-transform: none;
+        }
+
+        /* --- POPUP (MODAL) --- */
+        .service-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-container-relative {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .modal-content {
+            background: #0a2717;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 0px;
+            top: -50px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            opacity: 0.7;
+        }
+
+        .close-modal:hover {
+            color: var(--gold);
+            opacity: 1;
+            transform: rotate(90deg);
+        }
+
+        .modal-header-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .modal-header-wrap img {
+            width: 40px;
+            filter: invert(83%) sepia(21%) saturate(1028%) hue-rotate(1deg) brightness(95%) contrast(92%);
+        }
+
+        .modal-header-title {
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .modal-header-title span {
+            color: var(--gold);
+        }
+
+        /* КАРТИЧКИ КОЦКИ */
+        .location-cards-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .location-entry-card {
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            flex-direction: column;
+            width: 380px;
+            height: 380px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+            overflow: hidden;
+        }
+
+        .location-entry-card:hover {
+            border-color: rgba(232, 197, 71, 0.4);
+        }
+
+        .loc-img {
+            width: 100%;
+            height: 50%;
+            overflow: hidden;
+        }
+
+        .loc-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            zoom: 20%;
+        }
+
+        .loc-content {
+            padding: 25px;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-top: 2px solid var(--gold);
+        }
+
+        .loc-content h4 {
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        .loc-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .loc-details p {
+            font-size: 0.85rem;
+            color: #bbb;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .loc-details i {
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+
+        .loc-details strong {
+            color: #fff;
+            font-weight: 400;
+        }
+
+        @media (max-width: 850px) {
+            .location-cards-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .location-entry-card {
+                width: 100%;
+                max-width: 380px;
+                height: 380px;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container nav">
+            <div class="logo">
+                <h2>Feel<span>Pehčevo</span></h2>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#hero">Почетна</a></li>
+                    <li><a href="index.html#categories">Истражи</a></li>
+                    <li><a href="index.html#top-locations">Топ Локации</a></li>
+                    <li><a href="services.html">Услуги</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="services-section">
+        <div class="container">
+            <div class="section-title-wrap">
+                <span class="sub-title">Сè што ви е потребно</span>
+                <h2 class="main-title">Градски <span>Услуги</span></h2>
+            </div>
+
+            <div class="services-modern-grid">
+                <div class="service-horizontal-card" onclick="openServiceModal('pharmacy')">
+                    <div class="service-vector-space"><img src="img/pharmacy.svg"></div>
+                    <div class="service-info">
+                        <h3>Аптеки</h3>
+                        <p>Медицинска поддршка 24/7</p>
+                    </div>
+                </div>
+
+                <div class="service-horizontal-card" onclick="openServiceModal('market')">
+                    <div class="service-vector-space"><img src="img/shopping-cart.svg"></div>
+                    <div class="service-info">
+                        <h3>Маркети</h3>
+                        <p>Најдобрите локални маркети</p>
+                    </div>
+                </div>
+
+                <div class="service-horizontal-card" onclick="openServiceModal('car')">
+                    <div class="service-vector-space"><img src="img/maintenance.svg"></div>
+                    <div class="service-info">
+                        <h3>Автосервиси</h3>
+                        <p>Брза и сигурна поправка</p>
+                    </div>
+                </div>
+
+                <div class="service-horizontal-card" onclick="openServiceModal('barber')">
+                    <div class="service-vector-space"><img src="img/hairdressing-scissors.svg"></div>
+                    <div class="service-info">
+                        <h3>Салони</h3>
+                        <p>Професионална грижа и стил</p>
+                    </div>
+                </div>
+
+                <div class="service-horizontal-card" onclick="openServiceModal('atm')">
+                    <div class="service-vector-space"><img src="img/atm.svg"></div>
+                    <div class="service-info">
+                        <h3>Банкомати</h3>
+                        <p>Лесен пристап до готовина</p>
+                    </div>
+                </div>
+
+                <div class="service-horizontal-card" onclick="openServiceModal('post')">
+                    <div class="service-vector-space"><img src="img/envelop.svg"></div>
+                    <div class="service-info">
+                        <h3>Пошта</h3>
+                        <p>Поштенски и карго услуги</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="service-modal" class="service-modal">
+        <div class="modal-container-relative">
+            <span class="close-modal" onclick="closeServiceModal()"><i class="fas fa-times"></i></span>
+            <div class="modal-content">
+                <div class="modal-header-wrap">
+                    <img src="" id="modal-header-icon">
+                    <h2 id="modal-category-title" class="modal-header-title">Наслов</h2>
+                </div>
+                <div id="location-cards-container" class="location-cards-wrapper">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const serviceData = {
+            'pharmacy': {
+                title: 'Локални <span>Аптеки</span>',
+                icon: 'img/pharmacy.svg',
+                locations: [
+                    { name: 'Аптека Арника', img: 'img/arnika.jpeg', hours: '08:00 - 21:00', tel: '+389 33 441 676' },
+                    { name: 'Аптека Зегин', img: 'img/zegin.png', hours: '08:00 - 21:00', tel: '+389 33 413 700' }
+                ]
+            },
+            'market': {
+                title: 'Градски <span>Маркети</span>',
+                icon: 'img/shopping-cart.svg',
+                locations: [
+                    { name: 'Кит-Го Маркет', img: 'img/kitgo.jpeg', hours: '07:30 - 21:30', tel: '+389 33 555 111' },
+                    { name: 'Ивел Стојан', img: 'img/ivelstojan.jpeg', hours: '07:00 - 22:00', tel: '+389 75 222 333' }
+                ]
+            },
+            'car': {
+                title: 'Авто <span>Сервиси</span>',
+                icon: 'img/maintenance.svg',
+                locations: [
+                    { name: 'Автосервис Иво', img: 'img/ivo.jpg', hours: '08:00 - 17:00', tel: '+389 70 111 222' },
+                    { name: 'Вулканизер Методи', img: 'img/service2.jpg', hours: '09:00 - 18:00', tel: '+389 71 888 999' }
+                ]
+            },
+            'barber': {
+                title: 'Нега и <span>Убавина</span>',
+                icon: 'img/hairdressing-scissors.svg',
+                locations: [
+                    { name: 'BarberShop Gold', img: 'img/gold.jpg', hours: '10:00 - 21:00', tel: '+389 77 677 348' },
+                    { name: 'Студио Слаѓана', img: 'img/barber2.jpg', hours: '10:00 - 18:00', tel: '+389 72 444 555' }
+                ]
+            },
+            'atm': {
+                title: 'Достапни <span>Банкомати</span>',
+                icon: 'img/atm.svg',
+                locations: [
+                    { name: 'Стопанска Банка', img: 'img/stopanska.jpeg', hours: '24/7', tel: '15 110' },
+                    { name: 'Комерцијална Банка', img: 'img/atm2.jpg', hours: '24/7', tel: '15 222' }
+                ]
+            },
+            'post': {
+                title: 'Пошта и <span>Логистика</span>',
+                icon: 'img/envelop.svg',
+                locations: [
+                    { name: 'Македонска Пошта', img: 'img/posta.jpeg', hours: '08:00 - 16:00', tel: '+389 33 441 120' },
+                    { name: 'Карго Експрес', img: 'img/stajo.jpeg', hours: '09:00 - 17:00', tel: '+389 77 123 456' }
+                ]
+            }
+        };
+
+        function openServiceModal(type) {
+            const data = serviceData[type];
+            document.getElementById('modal-category-title').innerHTML = data.title;
+            document.getElementById('modal-header-icon').src = data.icon;
+
+            const container = document.getElementById('location-cards-container');
+            container.innerHTML = '';
+
+            data.locations.forEach(loc => {
+                container.innerHTML += `
+                    <div class="location-entry-card">
+                        <div class="loc-img"><img src="${loc.img}"></div>
+                        <div class="loc-content">
+                            <h4>${loc.name}</h4>
+                            <div class="loc-details">
+                                <p><i class="fas fa-clock"></i>Работно време: <strong>${loc.hours}</strong></p>
+                                <p><i class="fas fa-phone"></i>Контакт: <strong>${loc.tel}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('service-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeServiceModal() {
+            document.getElementById('service-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = (e) => { if (e.target.id == 'service-modal') closeServiceModal(); }
+    </script>
+</body>
+
+</html>

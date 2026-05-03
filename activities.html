@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="mk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activities | Explore Pehcevo</title>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=Cormorant+Garamond:ital,wght@1,500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .hero-page {
+            position: relative !important;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('img/activitieshero.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            height: 500px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            color: #fff;
+        }
+  .hero-page h1 {
+            font-size: 75px; /* Оригинална големина од претходно */
+            text-transform: uppercase;
+            margin: 0;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .hero-page p {
+            font-size: 20px; 
+            color: #ccc;
+            margin-top: 15px;
+            max-width: 800px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #e8c547;
+            cursor: pointer;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .scroll-indicator i {
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+
+        /* GRID */
+         .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            padding: 60px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* CARD STYLES */
+        .card {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            background: #000;
+            cursor: pointer;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s ease;
+            opacity: 0.8;
+        }
+
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 110px;
+               background: rgba(5, 18, 12, 0.72);
+    backdrop-filter: blur(10px);
+
+            border-top: 2px solid #e8c547;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: unset; 
+            padding: 20px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            box-sizing: border-box;
+        }
+
+        .card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            color: #fff;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .card p {
+            font-family: "Times New Roman", Times, serif !important;
+            font-size: 1rem !important;
+            letter-spacing: 1px !important;
+            color: #ccc;
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            transition: 0.4s ease;
+            transform: translateY(20px);
+            visibility: hidden;
+        }
+
+        .card .btn-outline {
+            opacity: 0;
+            visibility: hidden;
+            margin-top: 15px;
+            transform: translateY(20px);
+            transition: 0.4s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.4);
+        }
+
+        .card:hover .card-content {
+            height: 100%;
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(12px);
+            justify-content: center; 
+        }
+
+        .card:hover h3 {
+            color: #e8c547;
+            margin-bottom: 15px;
+        }
+
+        .card:hover p {
+          text-align: center;
+            opacity: 1;
+            height: auto;
+            visibility: visible;
+            margin: 15px 0 20px;
+            padding: 0 20px 40px;
+        }
+
+        .card:hover .btn-outline {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .btn-outline {
+            background: transparent !important;
+            color: #e8c547 !important;
+            border: 2px solid #e8c547 !important;
+            padding: 10px 22px !important;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: #e8c547 !important;
+            color: #000 !important;
+        }
+
+        /* MODAL OVERLAY */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-container {
+            background: #0a0e11;
+            width: 90%;
+            max-width: 950px;
+            height: 550px;
+            display: flex;
+            position: relative;
+            border: 1px solid #333;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-left {
+            width: 45%;
+            height: 100%;
+            border-right: 1px solid #333;
+            overflow: hidden;
+        }
+
+        .modal-left img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-right {
+            background: #0a2717;
+            width: 55%;
+            padding: 40px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #e8c547;
+            font-size: 28px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+        }
+
+        .activity-type-tag {
+            color: #e8c547;
+            text-transform: uppercase;
+            font-family: 'Times New Roman', Times, serif;
+            letter-spacing: 1,5px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .modal-right h2 {
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            line-height: 1.2;
+        }
+
+        .activity-desc {
+            color: #bbb;
+            line-height: 1.6;
+            font-family: "Times New Roman", serif;
+            font-size: 1.05rem;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+
+        .activity-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .meta-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px;
+            border-left: 2px solid #e8c547;
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        .meta-item i {
+            color: #e8c547;
+            margin-right: 8px;
+            width: 15px;
+            text-align: center;
+        }
+
+        .meta-item span {
+            color: #777;
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        @media (max-width: 900px) {
+            .modal-container {
+                flex-direction: column;
+                height: auto;
+                max-height: 90vh;
+                width: 95%;
+            }
+
+            .modal-left {
+                width: 100%;
+                height: 200px;
+                border-right: none;
+            }
+
+            .modal-right {
+                width: 100%;
+                padding: 25px;
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .close-modal {
+                top: 10px;
+                right: 10px;
+                background: rgba(0, 0, 0, 0.5);
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+         <div class="container nav">
+            <div class="logo">
+                <img src="img/logofooter.png" alt="">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Дома</a></li>
+                    <li><a href="acomodation.html">Сместување</a></li>
+                    <li><a href="gastronomy.html">Гастрономија</a></li>
+                    <li><a href="activities.html" class="active">Активности</a></li>
+                    <li><a href="localorigin.html">Продукти</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-page">
+        <div class="container">
+            <h1>Активности</h1>
+            <p>Откријте ги природните реткости и авантуристичките патеки на Пехчево.</p>
+        </div>
+        <a href="#content" class="scroll-indicator">
+            <span>Истражи</span>
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <section id="content" style="background: #0a2717;">
+        <div class="container">
+            <div class="grid">
+
+                <div class="card">
+                    <img src="img/vodopad2.jpeg" alt="Waterfalls">
+                    <div class="card-content">
+                        <h3>Пехчевски Водопади</h3>
+                        <p>Искусете ја моќта на седумте малешевски водопади.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Пехчевски Водопади"
+                            data-type="Природен феномен"
+                            data-desc="Пехчевските водопади се едни од најубавите природни реткост во Малешевскиот регион, сместени на текот на реката Брегалница. Секој од водопадите има своја специфична убавина и различна висина, а најпознатиот паѓа од преку десет метри. До нив водат добро обележани патеки кои минуваат низ густа и недопрена шума. Звукот на водата и свежиот планински воздух создаваат неповторливо чувство на спокој и релаксација. Ова е задолжителна дестинација за секој посетител кој сака да ја доживее дивата природа на Пехчево."
+                            data-loc="Равна Река" data-diff="Лесна" data-time="Април - Октомври" data-gear="Патики"
+                            data-img="img/vodopad2.jpeg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/ezerce.jpg" alt="Ezerce">
+                    <div class="card-content">
+                        <h3>Езерце Парк</h3>
+                        <p>Рекреативен центар за целото семејство.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Езерце Парк"
+                            data-type="Рекреација"
+                            data-desc="Локалитетот Езерце претставува современа туристичка зона уредена за одмор, рекреација и семејни излети. Централниот дел го зафаќа малото вештачко езеро опкружено со високи дрвја и уредени тревни површини. Во паркот се поставени летниковци, места за палење оган и детски игралишта, што го прави омилено место за викенди. Овде природата е во совршен баланс со човечките потреби за удобност и мир. Паркот служи како главна собирен центар за туристите пред да тргнат во истражување на околните планински патеки."
+                            data-loc="Пехчево" data-diff="Многу лесна" data-time="Цела година" data-gear="Секојдневна"
+                            data-img="img/ezerce.jpg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/vrtenaskala.jpg" alt="Vrtena Skala">
+                    <div class="card-content">
+                        <h3>Вртена Скала</h3>
+                        <p>Мистична карпа со неверојатна форма.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Вртена Скала"
+                            data-type="Геологија / Легенда"
+                            data-desc="Вртена Скала е уникатен природен феномен и карпеста формација со огромен природен отвор во средината. Ова место е длабоко врежано во локалната традиција поради верувањето во неговите исцелителни и духовни моќи. Посетителите доаѓаат овде за да се протнат низ отворот на карпата, верувајќи дека тоа носи здравје и среќа. Карпата е лоцирана во густ шумски предел, што дополнително придонесува за нејзиниот мистичен изглед. До неа се стигнува по тесна планинска патека која нуди вистинско адреналинско искуство."
+                            data-loc="Пехчевски регион" data-diff="Средна" data-time="Пролет / Есен"
+                            data-gear="Планинарска" data-img="img/vrtenaskala.jpg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/ravnareka3.jpg" alt="Ravna Reka">
+                    <div class="card-content">
+                        <h3>Равна Река</h3>
+                        <p>Срцето на туризмот во Пехчево.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Равна Река"
+                            data-type="Туристичка зона"
+                            data-desc=" Туристичката населба Равна Река е вистинска оаза на мирот и најпознатото излетничко место во близина на Пехчево. Оваа област е позната по своите чисти извори на вода и бројните рибници во кои се одгледува речна пастрмка. Покрај реката се изградени викендички и ресторани каде посетителите можат да уживаат во традиционална храна. Равна Река е идеална почетна точка за многу планинарски тури кои водат кон највисоките врвови. Свежината на реката и сенките на боровите дрвја нудат спас од летните горештини."
+                            data-loc="10км од центар" data-diff="Лесна" data-time="Лето" data-gear="Спортска"
+                            data-img="img/ravnareka3.jpg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/edukativen.jpg" alt="Negrevo">
+                    <div class="card-content">
+                        <h3>Едукативен Центар</h3>
+                        <p>Центар за едукација и заштита на природата.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Едукативен центар Негрево"
+                            data-type="Едукација"
+                            data-desc="Едукативниот центар во село Негрево е посветен на зачувување на природата и еколошката едукација на младите. Сместен е во реновиран објект и опремен со најмодерни мултимедијални системи за презентација на биодиверзитетот. Посетителите можат да се запознаат со ретките видови на флора и фауна кои живеат само во овој регион. Центарот нуди организирани тури и работилници кои го подигаат знаењето за заштита на животната средина. Овој објект е клучен за развојот на еко-туризмот и истражувачката дејност во Малешевијата."
+                            data-loc="с. Негрево" data-diff="Пристапно" data-time="По најава" data-gear="Не е потребна"
+                            data-img="img/edukativen.jpg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/svpetka.jpg" alt="St. Petka">
+                    <div class="card-content">
+                        <h3>Манастир Св.Петка</h3>
+                        <p>Духовно светилиште над градот.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Манастир Св.Петка"
+                            data-type="Религија"
+                            data-desc="Манастирот Света Петка манастир Пехчево е значаен православен храм, целосно обновен и денес уреден и светол. Сместен на мирна локација со длабоко духовно значење, тој е омилено место за молитва и спокој. Иако нема конаци, дворот е чист и гостопримлив, а храмот останува симбол на верата и заедништвото на локалното население."
+                            data-loc="Рид над градот" data-diff="Лесна" data-time="Цела година"
+                            data-gear="Скромна облека" data-img="img/svpetka.jpg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/petko.jpg" alt="Petko's path">
+                    <div class="card-content">
+                        <h3>Патеката на Петко</h3>
+                        <p>Едукативна патека за најмладите.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Патеката на Петко"
+                            data-type="Забава / Едукација"
+                            data-desc="Патеката на Петко е тематска рекреативна патека која нуди забава и едукација низ прошетка во природа. Таа е специјално наменета за деца и семејства, со бројни едукативни табли и дрвени фигури по патот. Главниот лик, Петко, ги води посетителите низ приказни за шумата и нејзините жители. Патеката е лесна за пешачење, добро обезбедена и поминува низ најживописните делови покрај реката. Завршува кај водопадите, правејќи ја прошетката комплетна и исполнета со возбудливи глетки."
+                            data-loc="Равна Река" data-diff="Многу лесна" data-time="Мај - Септември" data-gear="Патики"
+                            data-img="img/petko.jpg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/judovi.jpg" alt="Judovi Livadi">
+                    <div class="card-content">
+                        <h3>Јудови Ливади</h3>
+                        <p>Местото на инсектојадната „Муволовка“.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Јудови Ливади"
+                            data-type="Ботаника"
+                            data-desc="Локалитетот Јудови Ливади е светски познат како едно од ретките живеалишта на инсектојадното растение „Росичка“ (Drosera rotundifolia). Ова фасцинантно растение преживува во специфичната почва така што лови инсекти со помош на лепливи капки кои на сонцето блескаат како роса. Штом инсектот ќе се залепи на листот, растението полека го затвора и започнува процесот на дигестија за да ги извлече потребните хранливи материи. Посетата на ова место нуди ретка можност во живо да се види ова чудо на ботаниката кое е вистинска атракција за научниците и љубителите на природата."
+                            data-loc="Близу с. Негрево" data-diff="Лесна" data-time="Јуни - Август"
+                            data-gear="Водоотпорни" data-img="img/judovi.jpg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/kadiica.webp" alt="Kadiica">
+                    <div class="card-content">
+                        <h3>Врв Кадиица</h3>
+                        <p>Највисокиот врв на Влаина планина.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Врв Кадиица"
+                            data-type="Авантура"
+                            data-desc="Врвот Кадиица е највисоката точка на планината Влаина и претставува вистински предизвик за планинарите. Со својата висина од 1932 метри, тој нуди спектакуларен поглед на цела Источна Македонија и делови од Бугарија. Патеката до врвот минува низ пасишта и каменити предели каде можат да се сретнат стада овци. На самиот врв често дуваат силни ветрови, но чистиот хоризонт вреди за секој вложен напор. Ова е место каде небото и земјата се допираат во една величествена панорама."
+                            data-loc="Влаина Планина" data-diff="Тешка" data-time="Мај - Октомври"
+                            data-gear="Планинарска" data-img="img/kadiica.webp">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/bukovik.jpg" alt="Bukovik">
+                    <div class="card-content">
+                        <h3>Вулканска купа Буковик</h3>
+                        <p>Истражете го древниот вулкански конус.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Вулканска купа Буковик"
+                            data-type="Геологија"
+                            data-desc="Буковик е геолошки споменик на природата кој сведочи за древната вулканска активност на овие простори. Оваа заоблена вулканска купа е препознатлива во пејзажот и е богата со ретки видови минерали и руди. Иако е покриена со шума, карпестите делови јасно го откриваат нејзиното магматско потекло. Местото е одлично за едукативни излети и запознавање со процесите кои ја формирале земјата перед милиони години. Буковик доминира над Пехчево како тивок чувар на времето и природните богатства."
+                            data-loc="Околина на Пехчево" data-diff="Средна" data-time="Цела година"
+                            data-gear="Цврсти обувки" data-img="img/bukovik.jpg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/kukuljeto (1) (1).jpg" alt="Kukuljeto">
+                    <div class="card-content">
+                        <h3>Кукуљето</h3>
+                        <p>Природни камени скулптури.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Кукуљето"
+                            data-type="Природен феномен"
+                            data-desc="Кукуљето кај селото Истевник е локалитет познат по своите необични земјени фигури наречени пирамиди. Овие форми се создадени со долготрајно дејство на дождовната вода врз меката песочна почва. Секоја фигура има уникатен изглед, а народот често ги поврзува со скаменети луѓе од старите легенди. Пределот е суров и различен од шумскиот амбиент, нудејќи визуелен контраст кој е многу атрактивен за фотографите. Посетата на Кукуљето е како патување низ галерија на скулптури направени од самата природа."
+                            data-loc="15км од Пехчево" data-diff="Средна" data-time="Пролет / Есен" data-gear="Патики"
+                            data-img="img/kukuljeto (1) (1).jpg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="img/crnickimelovi.jpg" alt="Crnicki Melovi">
+                    <div class="card-content">
+                        <h3>Црнички Мелови</h3>
+                        <p>Спектакуларни земјени пирамиди.</p>
+                        <button class="btn-outline" onclick="openActivityModal(this)" data-title="Црнички Мелови"
+                            data-type="Геологија"
+                            data-desc="Црнички Мелови се фасцинантни ерозивни форми во облик на голи ридови со бела и сива боја. Тие се настанати со процеси на миење на земјиштето, создавајќи длабоки бразди и остри сртови. Овој специфичен релјеф потсетува на „месечев пејзаж“ и е единствен по својата форма во овој дел од земјата. Меловите се менуваат под дејство на природата, секогаш нудејќи нова слика за набљудувачите. Тие се сведоштво за моќта на ерозијата која успеала да создаде уметност од обичната земја."
+                            data-loc="с. Црник" data-diff="Лесна" data-time="Цела година" data-gear="Спортска"
+                            data-img="img/crnickimelovi.jpg">Дознај повеќе</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div id="activityModal" class="modal-overlay">
+        <div class="modal-container">
+            <button class="close-modal" onclick="closeActivityModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-left">
+                <img src="" id="act-img">
+            </div>
+            <div class="modal-right">
+                <div>
+                    <span id="act-type" class="activity-type-tag"></span>
+                    <h2 id="act-title"></h2>
+                    <p id="act-desc" class="activity-desc"></p>
+                </div>
+                <div class="activity-meta">
+                    <div class="meta-item"><span>Локација</span><i class="fas fa-map-marker-alt"></i><b
+                            id="act-location"></b></div>
+                    <div class="meta-item"><span>Тежина</span><i class="fas fa-mountain"></i><b id="act-diff"></b></div>
+                    <div class="meta-item"><span>Најдобар период</span><i class="fas fa-calendar-alt"></i><b
+                            id="act-time"></b></div>
+                    <div class="meta-item"><span>Опрема</span><i class="fas fa-hiking"></i><b id="act-gear"></b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('activityModal');
+        function openActivityModal(btn) {
+            document.getElementById('act-title').innerText = btn.getAttribute('data-title');
+            document.getElementById('act-type').innerText = btn.getAttribute('data-type');
+            document.getElementById('act-desc').innerText = btn.getAttribute('data-desc');
+            document.getElementById('act-location').innerText = btn.getAttribute('data-loc');
+            document.getElementById('act-diff').innerText = btn.getAttribute('data-diff');
+            document.getElementById('act-time').innerText = btn.getAttribute('data-time');
+            document.getElementById('act-gear').innerText = btn.getAttribute('data-gear');
+            document.getElementById('act-img').src = btn.getAttribute('data-img');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeActivityModal() { modal.classList.remove('active'); document.body.style.overflow = 'auto'; }
+        window.onclick = (e) => { if (e.target == modal) closeActivityModal(); }
+    </script>
+
+</body>
+
+</html>
