@@ -325,15 +325,185 @@
         .icon-box { width: 55px; height: 55px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; color: #e8c547; font-size: 1.4rem; }
         .btn-reserve { background: #e8c547; color: #000; border: none; height: 55px; font-weight: 800; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; cursor: pointer; width: 100%; transition: 0.3s; }
         .btn-reserve:hover { background: #fff; }
-
-        @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) {
-            .hero-page h1 { font-size: 45px; }
-            .hero-page p { font-size: 16px; }
-            .modal-container { flex-direction: column; height: auto; max-height: 90vh; overflow-y: auto; }
-            .modal-left, .modal-right { width: 100%; }
-            .modal-left { height: 350px; }
+
+    html, body {
+        overflow-x: hidden !important;
+    }
+
+    body.modal-open {
+        overflow: hidden !important;
+    }
+
+    /* ================= HERO ================= */
+    .hero-page {
+        height: auto !important;
+        min-height: 480px !important;
+        padding: 80px 0 !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+
+        h1 {
+            font-size: 11.5vw !important;
+            line-height: 1 !important;
+            font-weight: 900 !important;
+            text-transform: uppercase !important;
         }
+
+        p {
+            font-size: 16px !important;
+            max-width: 85% !important;
+            margin: 0 auto !important;
+        }
+    }
+
+    /* ================= GRID (КАРТИЧКИ ПРЕД POPUP) ================= */
+    .grid {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 50px !important;
+        padding: 40px 15px !important;
+    }
+
+    .card {
+        width: 273px !important;
+        height: 380px !important;
+    }
+
+    /* ================= MODAL ================= */
+    .modal-overlay {
+        position: fixed !important;
+        inset: 0;
+        padding: 60px 15px 20px 15px !important;
+        background: rgba(0,0,0,0.5) !important;
+        backdrop-filter: blur(12px) !important;
+        z-index: 5000 !important;
+
+        display: none;
+        align-items: center !important;
+        justify-content: center !important;
+
+        &.active {
+            display: flex !important;
+        }
+    }
+
+    .modal-container {
+        width: 100% !important;
+        max-width: 350px !important;
+        max-height: 90vh !important;
+
+        background: #0d1414 !important;
+        border: 1px solid #1a2a2a !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+
+        overflow-y: auto !important;
+        position: relative !important;
+    }
+
+    /* ================= CLOSE BUTTON (ТОЧНО НАД POPUP) ================= */
+    .close-modal {
+        position: absolute !important;
+        top: -40px !important;
+        right: 0 !important;
+
+        background: transparent !important;
+        border: none !important;
+
+        color: #e8c547 !important;
+        font-size: 34px !important;
+        font-weight: bold !important;
+
+        z-index: 9999 !important;
+        cursor: pointer !important;
+    }
+
+    /* ================= IMAGE ================= */
+    .modal-left {
+        width: 100% !important;
+        margin-bottom: 18px !important;
+
+        .main-img-box {
+            width: 100% !important;
+            height: 380px !important; /* 🔥 ПОВИСОКА И ПРИРОДНА */
+
+            img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important; /* НЕ СЕЧЕ ЧУДНО */
+                display: block !important;
+            }
+        }
+
+        .thumb-grid {
+            display: flex !important;
+            gap: 6px !important;
+            padding: 8px !important;
+
+            img {
+                width: 55px !important;
+                height: 55px !important;
+                object-fit: cover !important;
+            }
+        }
+    }
+
+    /* ================= INFO ================= */
+    .modal-right {
+        width: 100% !important;
+        padding: 15px !important;
+        background: #0a2717 !important;
+
+        h2 {
+            font-size: 1.3rem !important;
+            margin-bottom: 15px !important;
+            text-align: center !important;
+        }
+
+        .info-grid {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 20px !important; /* 🔥 FIX GAP */
+            padding-bottom: 15px;
+        }
+
+        .info-item {
+            padding: 12px 10px !important;
+            background: rgba(255,255,255,0.03) !important;
+            border-left: 3px solid #e8c547 !important;
+        }
+    }
+
+    /* ================= BUTTON ================= */
+    .action-area {
+        display: flex !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
+
+        .btn-reserve {
+            flex-grow: 1 !important;
+            height: 45px !important;
+            font-size: 0.75rem !important;
+            font-weight: 800 !important;
+            background: #e8c547 !important;
+            border: none !important;
+            text-transform: uppercase !important;
+        }
+
+        .icon-box {
+            width: 45px !important;
+            height: 45px !important;
+        }
+    }
+}
+
     </style>
 </head>
 
@@ -353,6 +523,11 @@
                     <li><a href="localorigin.html">Продукти</a></li>
                 </ul>
             </nav>
+                <div class="burger">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
         </div>
     </header>
 

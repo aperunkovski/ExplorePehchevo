@@ -26,16 +26,19 @@ window.onclick = function(event) {
 
 
 
+document.addEventListener("DOMContentLoaded", () => {
 
-
-function toggleMenu() {
-  const menu = document.getElementById("navMenu");
-  menu.classList.toggle("active");
-}
-function toggleMenu() {
-  const menu = document.getElementById("navMenu");
   const burger = document.querySelector(".burger");
+  const menu = document.getElementById("navMenu");
 
-  menu.classList.toggle("active");
-  burger.classList.toggle("active"); 
-}
+  console.log("burger:", burger);
+  console.log("menu:", menu);
+
+  if (!burger || !menu) return;
+
+  burger.addEventListener("click", () => {
+    burger.classList.toggle("active");
+    menu.classList.toggle("active");
+  });
+
+});
