@@ -112,7 +112,7 @@ body {
   align-items: flex-end;
   position: relative;
   padding-bottom: 8vh;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 10%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.1) 100%), url("img/IMG_6024.jpeg") top/cover no-repeat;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 10%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.1) 100%), url("../img/IMG_6024.jpeg") top/cover no-repeat;
 }
 .hero::before {
   content: "";
