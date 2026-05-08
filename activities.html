@@ -336,70 +336,188 @@
             margin-bottom: 2px;
         }
 
-        @media (max-width: 900px) {
-            .modal-container {
-                flex-direction: column;
-                height: auto;
-                max-height: 90vh;
-                width: 95%;
-            }
+      /* ================= MOBILE MEDIA QUERY (768px) ================= */
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden !important;
+    }
 
-            .modal-left {
-                width: 100%;
-                height: 200px;
-                border-right: none;
-            }
+    body.modal-open {
+        overflow: hidden !important;
+    }
 
-            .modal-right {
-                width: 100%;
-                padding: 25px;
-            }
+    /* --- HERO SECTION --- */
+    .hero-page {
+        height: auto !important;
+        min-height: 480px !important;
+        padding: 80px 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
 
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+    .hero-page h1 {
+        font-size: 11.5vw !important;
+        line-height: 1.1 !important;
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        padding: 0 10px;
+    }
 
-            .close-modal {
-                top: 10px;
-                right: 10px;
-                background: rgba(0, 0, 0, 0.5);
-                border-radius: 50%;
-                width: 40px;
-                height: 40px;
-            }
-        }
+    .hero-page p {
+        font-size: 16px !important;
+        max-width: 85% !important;
+        margin: 15px auto 0 !important;
+    }
 
-        @media (max-width: 600px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
+    /* --- GRID & CARDS --- */
+    .grid {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 30px !important; /* Намален гап за подобар проток */
+        padding: 40px 15px !important;
+    }
+
+    .card {
+        width: 100% !important;
+        max-width: 320px !important; /* Малку пошироки од примерот за подобра видливост */
+        height: 420px !important;
+    }
+
+    /* --- MODAL OVERLAY --- */
+    .modal-overlay {
+        position: fixed !important;
+        inset: 0;
+        padding: 60px 15px 20px 15px !important;
+        background: rgba(0,0,0,0.85) !important;
+        backdrop-filter: blur(12px) !important;
+        z-index: 5000 !important;
+        display: none;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .modal-overlay.active {
+        display: flex !important;
+    }
+
+    .modal-container {
+        width: 100% !important;
+        max-width: 380px !important;
+        max-height: 85vh !important;
+        background: #0a0e11 !important;
+        border: 1px solid #333 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow-y: auto !important;
+        position: relative !important;
+        height: auto !important;
+    }
+
+    /* --- CLOSE BUTTON --- */
+    .close-modal {
+        position: absolute !important;
+        top: -45px !important;
+        right: 0 !important;
+        background: transparent !important;
+        color: #e8c547 !important;
+        font-size: 34px !important;
+        z-index: 9999 !important;
+    }
+
+    /* --- MODAL LEFT (Image Section) --- */
+    .modal-left {
+        width: 100% !important;
+        height: 250px !important; /* Фиксна висина за сликата на мобилен */
+        border-right: none !important;
+        border-bottom: 1px solid #333 !important;
+    }
+
+    .modal-left img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    /* --- MODAL RIGHT (Content Section) --- */
+    .modal-right {
+        width: 100% !important;
+        padding: 25px 20px !important;
+        background: #0a2717 !important;
+        height: auto !important;
+        display: block !important; /* Овозможува природен скрол на содржината */
+    }
+
+    .modal-right h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 10px !important;
+        text-align: center !important;
+    }
+
+    .activity-type-tag {
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .activity-desc {
+        font-size: 0.95rem !important;
+        margin-bottom: 20px !important;
+        padding-right: 0 !important;
+        max-height: none !important; /* Го тргаме внатрешниот скрол за содржината */
+    }
+
+    /* --- ACTIVITY META (Info Grid) --- */
+    .activity-meta {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
+    }
+
+    .meta-item {
+        padding: 10px !important;
+        font-size: 0.75rem !important;
+    }
+
+    .meta-item span {
+        font-size: 0.6rem !important;
+    }
+
+    .meta-item strong {
+        font-size: 0.8rem !important;
+    }
+}
     </style>
 </head>
 
 <body>
 
-    <header class="header">
-         <div class="container nav">
-            <div class="logo">
-                <img src="img/logofooter.png" alt="">
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Дома</a></li>
-                    <li><a href="acomodation.html">Сместување</a></li>
-                    <li><a href="gastronomy.html">Гастрономија</a></li>
-                    <li><a href="activities.html" class="active">Активности</a></li>
-                    <li><a href="localorigin.html">Продукти</a></li>
-                </ul>
-            </nav>
-                <div class="burger">
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
+     <header class="header">
+    <div class="nav-wrapper">
+        <div class="logo">
+            <a href="index.html"><img src="img/logofooter.png" alt="Logo"></a>
         </div>
-    </header>
+
+        <nav id="navMenu">
+            <ul>
+                <li><a href="index.html">Почетна</a></li>
+               <li><a href="index.html#categories">Истражи</a></li>
+        <li><a href="index.html#top-locations">Топ Локации</a></li>
+                <li><a href="services.html">Услуги</a></li>
+            </ul>
+        </nav>
+
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
 
     <section class="hero-page">
         <div class="container">
@@ -416,7 +534,7 @@
         <div class="container">
             <div class="grid">
 
-                <div class="card">
+                <div class="card" id="pehcevski-vodopadi">
                     <img src="img/vodopad2.jpeg" alt="Waterfalls">
                     <div class="card-content">
                         <h3>Пехчевски Водопади</h3>
@@ -455,7 +573,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" id="ravna-reka">
                     <img src="img/ravnareka3.jpg" alt="Ravna Reka">
                     <div class="card-content">
                         <h3>Равна Река</h3>
@@ -520,7 +638,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card"id="vrv-kadiica">
                     <img src="img/kadiica.webp" alt="Kadiica">
                     <div class="card-content">
                         <h3>Врв Кадиица</h3>
@@ -600,23 +718,80 @@
         </div>
     </div>
 
-    <script>
-        const modal = document.getElementById('activityModal');
-        function openActivityModal(btn) {
-            document.getElementById('act-title').innerText = btn.getAttribute('data-title');
-            document.getElementById('act-type').innerText = btn.getAttribute('data-type');
-            document.getElementById('act-desc').innerText = btn.getAttribute('data-desc');
-            document.getElementById('act-location').innerText = btn.getAttribute('data-loc');
-            document.getElementById('act-diff').innerText = btn.getAttribute('data-diff');
-            document.getElementById('act-time').innerText = btn.getAttribute('data-time');
-            document.getElementById('act-gear').innerText = btn.getAttribute('data-gear');
-            document.getElementById('act-img').src = btn.getAttribute('data-img');
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+    // --- ЕЛЕМЕНТИ ЗА БУРГЕР МЕНИ ---
+    const burger = document.querySelector(".burger");
+    const menu = document.getElementById("navMenu");
+    const navLinks = document.querySelectorAll("#navMenu ul li a");
+
+    // --- ЕЛЕМЕНТИ ЗА МОДАЛ ---
+    const modal = document.getElementById('activityModal');
+
+    // 1. ЛОГИКА ЗА БУРГЕР МЕНИ
+    if (burger && menu) {
+        burger.addEventListener("click", () => {
+            burger.classList.toggle("active");
+            menu.classList.toggle("active");
+            
+            if (menu.classList.contains("active")) {
+                document.body.style.overflow = "hidden";
+            } else {
+                document.body.style.overflow = "auto";
+            }
+        });
+
+        // Затвори го менито кога ќе се кликне на линк (сидро)
+        navLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                burger.classList.remove("active");
+                menu.classList.remove("active");
+                document.body.style.overflow = "auto";
+            });
+        });
+    }
+
+    // 2. ФУНКЦИИ ЗА МОДАЛ (Activity Modal)
+    // Ги ставаме во window за да бидат достапни преку onclick во HTML
+    window.openActivityModal = function(btn) {
+        document.getElementById('act-title').innerText = btn.getAttribute('data-title');
+        document.getElementById('act-type').innerText = btn.getAttribute('data-type');
+        document.getElementById('act-desc').innerText = btn.getAttribute('data-desc');
+        document.getElementById('act-location').innerText = btn.getAttribute('data-loc');
+        document.getElementById('act-diff').innerText = btn.getAttribute('data-diff');
+        document.getElementById('act-time').innerText = btn.getAttribute('data-time');
+        document.getElementById('act-gear').innerText = btn.getAttribute('data-gear');
+        document.getElementById('act-img').src = btn.getAttribute('data-img');
+        
+        if (modal) {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-        function closeActivityModal() { modal.classList.remove('active'); document.body.style.overflow = 'auto'; }
-        window.onclick = (e) => { if (e.target == modal) closeActivityModal(); }
-    </script>
+    };
+
+    window.closeActivityModal = function() {
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    };
+
+    // 3. ЗАТВОРАЊЕ НА КЛИК НАДВОР (Глобално)
+    window.onclick = (e) => {
+        // Затвори модал ако се кликне надвор од него
+        if (modal && e.target == modal) {
+            closeActivityModal();
+        }
+        
+        // Опционално: Затвори мени ако се кликне надвор (ако сакаш)
+        if (menu && menu.classList.contains('active') && !menu.contains(e.target) && !burger.contains(e.target)) {
+            burger.classList.remove("active");
+            menu.classList.remove("active");
+            document.body.style.overflow = "auto";
+        }
+    };
+});
+</script>
 
 </body>
 

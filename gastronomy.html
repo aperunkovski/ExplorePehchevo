@@ -509,27 +509,29 @@
 
 <body>
 
-    <header class="header">
-          <div class="container nav">
-            <div class="logo">
-                <img src="img/logofooter.png" alt="">
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Дома</a></li>
-                    <li><a href="acomodation.html">Сместување</a></li>
-                    <li><a href="gastronomy.html" class="active">Гастрономија</a></li>
-                    <li><a href="activities.html">Активности</a></li>
-                    <li><a href="localorigin.html">Продукти</a></li>
-                </ul>
-            </nav>
-                <div class="burger">
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
+   <header class="header">
+    <div class="nav-wrapper">
+        <div class="logo">
+            <a href="index.html"><img src="img/logofooter.png" alt="Logo"></a>
         </div>
-    </header>
+
+        <nav id="navMenu">
+            <ul>
+                <li><a href="index.html">Почетна</a></li>
+               <li><a href="index.html#categories">Истражи</a></li>
+        <li><a href="index.html#top-locations">Топ Локации</a></li>
+                <li><a href="services.html">Услуги</a></li>
+            </ul>
+        </nav>
+
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
 
     <section class="hero-page">
         <h1>Гастрономија</h1>
@@ -645,50 +647,120 @@
         <img src="" id="zoomImg" style="max-width:90%; max-height:90%; object-fit:contain;">
     </div>
 
-    <script>
-        function openModal(btn) {
-            const modal = document.getElementById('gModal');
-            document.getElementById('mTitle').innerText = btn.dataset.title;
-            document.getElementById('mWork').innerText = btn.dataset.work;
-            document.getElementById('mTerace').innerText = btn.dataset.terace;
-            document.getElementById('mCard').innerText = btn.dataset.card;
-            document.getElementById('mCuisine').innerText = btn.dataset.cuisine;
-            document.getElementById('mLoc').innerText = btn.dataset.loc;
-            document.getElementById('mTel').innerText = btn.dataset.tel;
+   <script>
+document.addEventListener("DOMContentLoaded", () => {
+    // --- ЕЛЕМЕНТИ ---
+    const burger = document.querySelector(".burger");
+    const menu = document.getElementById("navMenu");
+    const navLinks = document.querySelectorAll("#navMenu ul li a");
+    
+    const activityModal = document.getElementById('activityModal');
+    const gModal = document.getElementById('gModal');
 
-            const imgs = btn.dataset.imgs.split(',');
-            document.getElementById('mImg').src = imgs[0];
-            document.getElementById('zoomImg').src = imgs[0];
+    // 1. БУРГЕР МЕНИ ЛОГИКА
+    if (burger && menu) {
+        burger.addEventListener("click", () => {
+            burger.classList.toggle("active");
+            menu.classList.toggle("active");
+            document.body.style.overflow = menu.classList.contains("active") ? "hidden" : "auto";
+        });
 
-            const thumbsBox = document.getElementById('mThumbs');
-            thumbsBox.innerHTML = '';
-            imgs.slice(0, 6).forEach((img, index) => {
-                const imgEl = document.createElement('img');
-                imgEl.src = img;
-                if (index === 0) imgEl.classList.add('active');
-                imgEl.onclick = function () {
-                    document.getElementById('mImg').src = this.src;
-                    document.getElementById('zoomImg').src = this.src;
-                    document.querySelectorAll('.thumb-grid img').forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                };
-                thumbsBox.appendChild(imgEl);
+        navLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                burger.classList.remove("active");
+                menu.classList.remove("active");
+                document.body.style.overflow = "auto";
             });
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+        });
+    }
 
-        function closeModal() {
-            document.getElementById('gModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+    // 2. МОДАЛ ЗА ГАЛЕРИЈА / РЕСТОРАНИ (openModal)
+    window.openModal = function(btn) {
+        if (!gModal) return;
 
-        function toggleZoom(show) {
-            const zoom = document.getElementById('zoomOverlay');
-            zoom.style.display = show ? 'flex' : 'none';
-        }
+        // Пополнување податоци
+        document.getElementById('mTitle').innerText = btn.dataset.title;
+        document.getElementById('mWork').innerText = btn.dataset.work;
+        document.getElementById('mTerace').innerText = btn.dataset.terace;
+        document.getElementById('mCard').innerText = btn.dataset.card;
+        document.getElementById('mCuisine').innerText = btn.dataset.cuisine;
+        document.getElementById('mLoc').innerText = btn.dataset.loc;
+        document.getElementById('mTel').innerText = btn.dataset.tel;
+
+        // Слики
+        const imgs = btn.dataset.imgs.split(',');
+        const mainImg = document.getElementById('mImg');
+        const zoomImg = document.getElementById('zoomImg');
         
-        window.onclick = (e) => { if(e.target.id == 'gModal') closeModal(); }
-    </script>
+        mainImg.src = imgs[0];
+        zoomImg.src = imgs[0];
+
+        // Генерирање Thumbnails
+        const thumbsBox = document.getElementById('mThumbs');
+        thumbsBox.innerHTML = '';
+        imgs.slice(0, 6).forEach((img, index) => {
+            const imgEl = document.createElement('img');
+            imgEl.src = img;
+            if (index === 0) imgEl.classList.add('active');
+            
+            imgEl.onclick = function () {
+                mainImg.src = this.src;
+                zoomImg.src = this.src;
+                document.querySelectorAll('#mThumbs img').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            };
+            thumbsBox.appendChild(imgEl);
+        });
+
+        gModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeModal = function() {
+        if (gModal) gModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    };
+
+    // 3. МОДАЛ ЗА АКТИВНОСТИ (openActivityModal)
+    window.openActivityModal = function(btn) {
+        if (!activityModal) return;
+
+        document.getElementById('act-title').innerText = btn.getAttribute('data-title');
+        document.getElementById('act-type').innerText = btn.getAttribute('data-type');
+        document.getElementById('act-desc').innerText = btn.getAttribute('data-desc');
+        document.getElementById('act-location').innerText = btn.getAttribute('data-loc');
+        document.getElementById('act-diff').innerText = btn.getAttribute('data-diff');
+        document.getElementById('act-time').innerText = btn.getAttribute('data-time');
+        document.getElementById('act-gear').innerText = btn.getAttribute('data-gear');
+        document.getElementById('act-img').src = btn.getAttribute('data-img');
+
+        activityModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeActivityModal = function() {
+        if (activityModal) activityModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    };
+
+    // 4. ЗУМ ФУНКЦИЈА
+    window.toggleZoom = function(show) {
+        const zoom = document.getElementById('zoomOverlay');
+        if (zoom) zoom.style.display = show ? 'flex' : 'none';
+    };
+
+    // 5. ГЛОБАЛЕН КЛИК (Затворање на клик надвор)
+    window.onclick = function(e) {
+        // Затвори галерија ако се кликне на позадината (gModal ID)
+        if (e.target.id === 'gModal') {
+            closeModal();
+        }
+        // Затвори активности ако се кликне на позадината (activityModal елемент)
+        if (e.target === activityModal) {
+            closeActivityModal();
+        }
+    };
+});
+</script>
 </body>
 </html>

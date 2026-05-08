@@ -11,6 +11,7 @@
 
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Outfit:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -19,27 +20,28 @@
 
 <body>
 
-    <header class="header transparent-nav">
-        <div class="container nav">
-            <div class="logo">
-                <img src="img/logofooter.png" alt="">
-            </div>
-            <nav id="navMenu">
-                <ul>
-                    <li><a href="#hero">Почетна</a></li>
-                    <li><a href="#categories">Истражи</a></li>
-                    <li><a href="#top-locations">Топ Локации</a></li>
-                    <li><a href="services.html">Услуги</a></li>
-                </ul>
-            </nav>
-
-              <div class="burger">
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
+ <header class="header">
+    <div class="nav-wrapper">
+        <div class="logo">
+            <a href="index.html"><img src="img/logofooter.png" alt="Logo"></a>
         </div>
-    </header>
+
+        <nav id="navMenu">
+            <ul>
+                <li><a href="index.html">Почетна</a></li>
+               <li><a href="index.html#categories">Истражи</a></li>
+        <li><a href="index.html#top-locations">Топ Локации</a></li>
+                <li><a href="services.html">Услуги</a></li>
+            </ul>
+        </nav>
+
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
 
     <section class="hero" id="hero">
         <div class="container">
@@ -171,38 +173,93 @@
         </div>
     </section>
 
-    <section class="top-locations" id="top-locations">
-        <div class="container">
-            <h2>Локални фаворити</h2>
-            <div class="locations-grid">
-                <div class="loc-item">
-                    <img src="img/ravnareka3.jpg"
-                        alt="Location 1">
-                    <div class="loc-info">
-                        <h4>Равна Река</h4>
-                        <span>⭐ 4.9 (50+ препораки)</span>
+<section class="top-locations" id="top-locations">
+    <div class="container">
+        <h2>Локални фаворити</h2>
+        <div class="locations-grid">
+      
+            <div class="loc-item" onclick="openActivity('ravna-reka')">
+                <img src="img/ravnareka3.jpg" alt="Равна Река">
+                <div class="loc-info">
+                    <h4>Равна Река</h4>
+                    <span>⭐ 4.9 (50+ препораки)</span>
+                </div>
+            </div>
+
+            <div class="loc-item" onclick="openActivity('vrv-kadiica')">
+                <img src="img/kadiica.webp" alt="Врв Кадиица">
+                <div class="loc-info">
+                    <h4>Врв Кадиица</h4>
+                    <span>⭐ 4.8 (70+ препораки)</span>
+                </div>
+            </div>
+            
+        
+            <div class="loc-item" onclick="openActivity('pehcevski-vodopadi')">
+                <img src="img/vodopad2.jpeg" alt="Пехчевски Водопад">
+                <div class="loc-info">
+                    <h4>Пехчевски Водопад</h4>
+                    <span>⭐ 5.0 (120+ препораки)</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div id="activityModal" class="modal-overlay activity-modal">
+    <div class="modal-container">
+      
+        <button class="close-modal" onclick="closeActivityModal()">×</button>
+        
+        <div class="modal-left">
+            <img src="" id="act-img">
+        </div>
+        
+        <div class="modal-right">
+            <div class="top-content">
+                <span id="act-type" class="activity-type-tag"></span>
+                <h2 id="act-title"></h2>
+                <p id="act-desc" class="activity-desc"></p>
+            </div>
+
+            <div class="activity-meta">
+                <!-- Секој елемент сега има контејнер за иконата (векторот) -->
+                <div class="meta-item">
+                    <span>Локација</span>
+                    <div class="meta-value">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <b id="act-location"></b>
                     </div>
                 </div>
-                <div class="loc-item">
-                    <img src="img/vodopadi3.jpg"
-                        alt="Location 2">
-                    <div class="loc-info">
-                        <h4>Пехчевски Водопад</h4>
-                        <span>⭐ 5.0 (120+ препораки)</span>
+
+                <div class="meta-item">
+                    <span>Тежина</span>
+                    <div class="meta-value">
+                        <i class="fa-solid fa-mountain"></i>
+                        <b id="act-diff"></b>
                     </div>
                 </div>
-                <div class="loc-item">
-                    <img src="img/cenginokale.jpg"
-                        alt="Location 3">
-                    <div class="loc-info">
-                        <h4>Ченгино Кале</h4>
-                        <span>⭐ 4.8 (70+ препораки)</span>
+
+                <div class="meta-item">
+                    <span>Период</span>
+                    <div class="meta-value">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <b id="act-time"></b>
+                    </div>
+                </div>
+
+                <div class="meta-item">
+                    <span>Опрема</span>
+                    <div class="meta-value">
+                        <i class="fa-solid fa-person-hiking"></i>
+                        <b id="act-gear"></b>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+</div>
 <footer class="main-footer">
     <div class="footer-glass-wrap">
         <div class="container-fluid">

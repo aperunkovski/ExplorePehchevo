@@ -37,58 +37,84 @@
             padding: 0 20px;
         }
 
-        /* --- HEADER (GLASS STYLE) --- */
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 25px 0;
-            border-bottom: 1px solid var(--border);
-            background: rgba(8, 18, 16, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-        }
+/* --- CSS Верзија --- */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(8, 18, 16, 0.85); /* Малку потемно за подобар контраст */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
 
-        .header .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.header .nav-wrapper {
+    display: flex;
+    justify-content: space-between; /* Ова ГАРАНТИРА лого лево, мени десно */
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
 
-        .header .nav .logo h2 {
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--white);
-        }
+.header .logo {
+    flex-shrink: 0; /* Не дозволува логото да се смачка */
+}
 
-        .header .nav .logo h2 span {
-            color: var(--gold);
-        }
+.header .logo img {
+    max-height: 55px; /* Малку помало за да не гази надолу */
+    width: auto;
+    display: block;
+}
 
-        .header .nav ul {
-            display: flex;
-            list-style: none;
-            gap: 40px;
-        }
+/* ДЕСКТОП МЕНИ */
+#navMenu {
+    display: block;
+}
 
-        .header .nav ul li a {
-            text-decoration: none;
-            font-family: 'Times New Roman', Times, serif;
-            color: var(--white);
-            font-size: 1.1rem;
-            font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
+#navMenu ul {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    margin: 0;
+    padding: 0;
+}
 
-        .header .nav ul li a:hover,
-        .header .nav ul li a.active {
-            color: var(--gold);
-        }
+#navMenu ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+}
 
+#navMenu ul li a:hover {
+    color: #e8c547;
+}
+
+/* BURGER - Скриен на десктоп */
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.burger span {
+    width: 28px;
+    height: 3px;
+    background: #fff;
+    transition: 0.3s ease;
+}
         /* --- SERVICES SECTION --- */
         .services-section {
             padding: 180px 0 100px;
@@ -100,7 +126,7 @@
         }
 
         .sub-title {
-            color: var(--gold);
+            color:#e8c547;
             text-transform: uppercase;
             letter-spacing: 7px;
             font-size: 0.8rem;
@@ -117,7 +143,7 @@
         }
 
         .main-title span {
-            color: var(--gold);
+            color: #e8c547;
         }
 
         .services-modern-grid {
@@ -138,7 +164,7 @@
         }
 
         .service-horizontal-card:hover {
-            border-color: var(--gold);
+            border-color: var(#e8c547);
             transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.05);
         }
@@ -319,48 +345,120 @@
             color: #fff;
             font-weight: 400;
         }
+/* --- МЕДИА КВЕРИ ЗА МОБИЛЕН (768px) --- */
+@media (max-width: 768px) {
+    /* Висина на хедерот на мобилен */
+    .header {
+        height: 70px;
+    }
 
-        @media (max-width: 850px) {
-            .location-cards-wrapper {
-                flex-direction: column;
-                align-items: center;
-            }
+    /* Подредување на логото и бургерот на крајните страни */
+    .header .nav-wrapper {
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
 
-            .location-entry-card {
-                width: 100%;
-                max-width: 380px;
-                height: 380px;
-            }
+    /* Мобилното мени - Full screen overlay */
+    #navMenu {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Сокриено десно */
+        width: 100%;
+        height: 100vh;
+        background: #081210;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1100;
+    }
 
-            .main-title {
-                font-size: 2.5rem;
-            }
-        }
+    /* Класа што ја додава JS за да го покаже менито */
+    #navMenu.active {
+        right: 0;
+    }
+
+    /* Стилизирање на листата во мобилното мени */
+    #navMenu ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #navMenu ul li a {
+        font-size: 1.5rem;
+        text-decoration: none;
+        color: #fff;
+        font-family: 'Times New Roman', Times, serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    /* Бургер копчето */
+    .burger {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        cursor: pointer;
+        z-index: 1200; /* Секогаш над менито */
+    }
+
+    .burger span {
+        width: 28px;
+        height: 3px;
+        background: #fff;
+        transition: 0.3s ease;
+    }
+
+    /* Анимација на линиите кога бургерот е "Active" */
+    .burger.active span:nth-child(1) { 
+        transform: rotate(45deg) translate(5px, 6px); 
+    }
+    .burger.active span:nth-child(2) { 
+        opacity: 0; 
+    }
+    .burger.active span:nth-child(3) { 
+        transform: rotate(-45deg) translate(5px, -6px); 
+    }
+}
     </style>
 </head>
 
 <body>
 
-    <header class="header">
-        <div class="container nav">
-            <div class="logo">
-                <h2>Feel<span>Pehčevo</span></h2>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html#hero">Почетна</a></li>
-                    <li><a href="index.html#categories">Истражи</a></li>
-                    <li><a href="index.html#top-locations">Топ Локации</a></li>
-                    <li><a href="services.html">Услуги</a></li>
-                </ul>
-            </nav>
-                <div class="burger">
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
+     <header class="header">
+    <div class="nav-wrapper">
+        <div class="logo">
+            <a href="index.html"><img src="img/logofooter.png" alt="Logo"></a>
         </div>
-    </header>
+
+        <nav id="navMenu">
+            <ul>
+                <li><a href="index.html">Почетна</a></li>
+               <li><a href="index.html#categories">Истражи</a></li>
+        <li><a href="index.html#top-locations">Топ Локации</a></li>
+                <li><a href="services.html">Услуги</a></li>
+            </ul>
+        </nav>
+
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
 
     <section class="services-section">
         <div class="container">
@@ -435,92 +533,116 @@
         </div>
     </div>
 
-    <script>
-        const serviceData = {
-            'pharmacy': {
-                title: 'Локални <span>Аптеки</span>',
-                icon: 'img/pharmacy.svg',
-                locations: [
-                    { name: 'Аптека Арника', img: 'img/arnika.jpeg', hours: '08:00 - 21:00', tel: '+389 33 441 676' },
-                    { name: 'Аптека Зегин', img: 'img/zegin.png', hours: '08:00 - 21:00', tel: '+389 33 413 700' }
-                ]
-            },
-            'market': {
-                title: 'Градски <span>Маркети</span>',
-                icon: 'img/shopping-cart.svg',
-                locations: [
-                    { name: 'Кит-Го Маркет', img: 'img/kitgo.jpeg', hours: '07:30 - 21:30', tel: '+389 33 555 111' },
-                    { name: 'Ивел Стојан', img: 'img/ivelstojan.jpeg', hours: '07:00 - 22:00', tel: '+389 75 222 333' }
-                ]
-            },
-            'car': {
-                title: 'Авто <span>Сервиси</span>',
-                icon: 'img/maintenance.svg',
-                locations: [
-                    { name: 'Автосервис Иво', img: 'img/ivo.jpg', hours: '08:00 - 17:00', tel: '+389 70 111 222' },
-                    { name: 'Вулканизер Методи', img: 'img/service2.jpg', hours: '09:00 - 18:00', tel: '+389 71 888 999' }
-                ]
-            },
-            'barber': {
-                title: 'Нега и <span>Убавина</span>',
-                icon: 'img/hairdressing-scissors.svg',
-                locations: [
-                    { name: 'BarberShop Gold', img: 'img/gold.jpg', hours: '10:00 - 21:00', tel: '+389 77 677 348' },
-                    { name: 'Студио Слаѓана', img: 'img/barber2.jpg', hours: '10:00 - 18:00', tel: '+389 72 444 555' }
-                ]
-            },
-            'atm': {
-                title: 'Достапни <span>Банкомати</span>',
-                icon: 'img/atm.svg',
-                locations: [
-                    { name: 'Стопанска Банка', img: 'img/stopanska.jpeg', hours: '24/7', tel: '15 110' },
-                    { name: 'Комерцијална Банка', img: 'img/atm2.jpg', hours: '24/7', tel: '15 222' }
-                ]
-            },
-            'post': {
-                title: 'Пошта и <span>Логистика</span>',
-                icon: 'img/envelop.svg',
-                locations: [
-                    { name: 'Македонска Пошта', img: 'img/posta.jpeg', hours: '08:00 - 16:00', tel: '+389 33 441 120' },
-                    { name: 'Карго Експрес', img: 'img/stajo.jpeg', hours: '09:00 - 17:00', tel: '+389 77 123 456' }
-                ]
-            }
-        };
+<script>
+    // --- BURGER LOGIC ---
+    document.addEventListener("DOMContentLoaded", () => {
+        const burger = document.querySelector(".burger");
+        const navMenu = document.querySelector("#navMenu");
 
-        function openServiceModal(type) {
-            const data = serviceData[type];
-            document.getElementById('modal-category-title').innerHTML = data.title;
-            document.getElementById('modal-header-icon').src = data.icon;
+        if (burger && navMenu) {
+            burger.addEventListener("click", () => {
+                burger.classList.toggle("active");
+                navMenu.classList.toggle("active");
+                
+                // Спречи скролање кога менито е отворено
+                if (navMenu.classList.contains("active")) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+    });
 
-            const container = document.getElementById('location-cards-container');
-            container.innerHTML = '';
+    // --- SERVICE MODAL LOGIC ---
+    const serviceData = {
+        'pharmacy': {
+            title: 'Локални <span>Аптеки</span>',
+            icon: 'img/pharmacy.svg',
+            locations: [
+                { name: 'Аптека Арника', img: 'img/arnika.jpeg', hours: '08:00 - 21:00', tel: '+389 33 441 676' },
+                { name: 'Аптека Зегин', img: 'img/zegin.png', hours: '08:00 - 21:00', tel: '+389 33 413 700' }
+            ]
+        },
+        'market': {
+            title: 'Градски <span>Маркети</span>',
+            icon: 'img/shopping-cart.svg',
+            locations: [
+                { name: 'Кит-Го Маркет', img: 'img/kitgo.jpeg', hours: '07:30 - 21:30' },
+                { name: 'Ивел Стојан', img: 'img/ivelstojan.jpeg', hours: '07:00 - 22:00' }
+            ]
+        },
+        'car': {
+            title: 'Авто <span>Сервиси</span>',
+            icon: 'img/maintenance.svg',
+            locations: [
+                { name: 'Автосервис Премиум', img: 'img/ivo.jpg', hours: '08:00 - 17:00', tel: '+389 78 222 431' },
+                { name: 'Вулканизер Методи', img: 'img/service2.jpg', hours: '09:00 - 18:00', tel: '+389 71 888 999' }
+            ]
+        },
+        'barber': {
+            title: 'Нега и <span>Убавина</span>',
+            icon: 'img/hairdressing-scissors.svg',
+            locations: [
+                { name: 'BarberShop Gold', img: 'img/gold.jpg', hours: '10:00 - 21:00', tel: '+389 77 677 348' }
+            ]
+        },
+        'atm': {
+            title: 'Достапни <span>Банкомати</span>',
+            icon: 'img/atm.svg',
+            locations: [
+                { name: 'Стопанска Банка', img: 'img/stopanska.jpeg', hours: '24/7' },
+                { name: 'Комерцијална Банка', img: 'img/atm2.jpg', hours: '24/7' }
+            ]
+        },
+        'post': {
+            title: 'Пошта и <span>Логистика</span>',
+            icon: 'img/envelop.svg',
+            locations: [
+                { name: 'Македонска Пошта', img: 'img/posta.jpeg', hours: '08:00 - 16:00', tel: '+389 33 441 120' },
+                { name: 'Карго Експрес', img: 'img/stajo.jpeg', hours: '09:00 - 17:00', tel: '+389 77 123 456' }
+            ]
+        }
+    };
 
-            data.locations.forEach(loc => {
-                container.innerHTML += `
-                    <div class="location-entry-card">
-                        <div class="loc-img"><img src="${loc.img}"></div>
-                        <div class="loc-content">
-                            <h4>${loc.name}</h4>
-                            <div class="loc-details">
-                                <p><i class="fas fa-clock"></i>Работно време: <strong>${loc.hours}</strong></p>
-                                <p><i class="fas fa-phone"></i>Контакт: <strong>${loc.tel}</strong></p>
-                            </div>
+    function openServiceModal(type) {
+        const data = serviceData[type];
+        document.getElementById('modal-category-title').innerHTML = data.title;
+        document.getElementById('modal-header-icon').src = data.icon;
+
+        const container = document.getElementById('location-cards-container');
+        container.innerHTML = '';
+
+        data.locations.forEach(loc => {
+            let phoneLine = loc.tel ? `<p><i class="fas fa-phone"></i>Контакт: <strong>${loc.tel}</strong></p>` : "";
+
+            container.innerHTML += `
+                <div class="location-entry-card">
+                    <div class="loc-img"><img src="${loc.img}"></div>
+                    <div class="loc-content">
+                        <h4>${loc.name}</h4>
+                        <div class="loc-details">
+                            <p><i class="fas fa-clock"></i>Работно време: <strong>${loc.hours}</strong></p>
+                            ${phoneLine}
                         </div>
                     </div>
-                `;
-            });
+                </div>
+            `;
+        });
 
-            document.getElementById('service-modal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
+        document.getElementById('service-modal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
 
-        function closeServiceModal() {
-            document.getElementById('service-modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+    function closeServiceModal() {
+        document.getElementById('service-modal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
 
-        window.onclick = (e) => { if (e.target.id == 'service-modal') closeServiceModal(); }
-    </script>
+    window.onclick = (e) => { 
+        if (e.target.id == 'service-modal') closeServiceModal(); 
+    }
+</script>
 </body>
 
 </html>

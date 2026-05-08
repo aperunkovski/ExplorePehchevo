@@ -509,26 +509,29 @@
 
 <body>
 
-    <header class="header">
-          <div class="container nav">
-            <div class="logo">
-                <img src="img/logofooter.png" alt="">
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Дома</a></li>
-                    <li><a href="acomodation.html" class="active">Сместување</a></li>
-                    <li><a href="gastronomy.html">Гастрономија</a></li>
-                    <li><a href="activities.html">Активности</a></li>
-                    <li><a href="localorigin.html">Продукти</a></li>
-                </ul>
-            </nav>
-              <div class="burger" onclick="toggleMenu()">
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
-    </header>
+     <header class="header">
+    <div class="nav-wrapper">
+        <div class="logo">
+            <a href="index.html"><img src="img/logofooter.png" alt="Logo"></a>
+        </div>
+
+        <nav id="navMenu">
+            <ul>
+                <li><a href="index.html">Почетна</a></li>
+               <li><a href="index.html#categories">Истражи</a></li>
+        <li><a href="index.html#top-locations">Топ Локации</a></li>
+                <li><a href="services.html">Услуги</a></li>
+            </ul>
+        </nav>
+
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
 
     <section class="hero-page">
         <h1>Сместување</h1>
@@ -655,50 +658,54 @@
         <img src="" id="zoomImg" style="max-width:90%; max-height:90%; object-fit:contain;">
     </div>
 
-    <script>
-        function openModal(btn) {
-            const modal = document.getElementById('aModal');
-            document.getElementById('mTitle').innerText = btn.dataset.title;
-            document.getElementById('mCap').innerText = btn.dataset.cap;
-            document.getElementById('mPark').innerText = btn.dataset.park;
-            document.getElementById('mIn').innerText = btn.dataset.in;
-            document.getElementById('mOut').innerText = btn.dataset.out;
-            document.getElementById('mLoc').innerText = btn.dataset.loc;
-            document.getElementById('mTel').innerText = btn.dataset.tel;
+    <!-- ================= SCROLL & BURGER SCRIPT ================= -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const burger = document.querySelector(".burger");
+    const menu = document.getElementById("navMenu");
+    const navLinks = document.querySelectorAll("#navMenu ul li a");
 
-            const imgs = btn.dataset.imgs.split(',');
-            document.getElementById('mImg').src = imgs[0];
-            document.getElementById('zoomImg').src = imgs[0];
+    if (burger && menu) {
+        // 1. Клик на Бургерот (Open/Close)
+        burger.addEventListener("click", () => {
+            burger.classList.toggle("active");
+            menu.classList.toggle("active");
+            
+            // Спречува скролање на позадината кога менито е отворено
+            if (menu.classList.contains("active")) {
+                document.body.style.overflow = "hidden";
+            } else {
+                document.body.style.overflow = "auto";
+            }
+        });
 
-            const thumbsBox = document.getElementById('mThumbs');
-            thumbsBox.innerHTML = '';
-            imgs.slice(0, 6).forEach((img, index) => {
-                const imgEl = document.createElement('img');
-                imgEl.src = img;
-                if (index === 0) imgEl.classList.add('active');
-                imgEl.onclick = function () {
-                    document.getElementById('mImg').src = this.src;
-                    document.getElementById('zoomImg').src = this.src;
-                    document.querySelectorAll('.thumb-grid img').forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                };
-                thumbsBox.appendChild(imgEl);
+        // 2. Логика за линковите (Истражи, Топ Локации...)
+        navLinks.forEach(link => {
+            link.addEventListener("click", (e) => {
+                // Прво го затвораме менито
+                burger.classList.remove("active");
+                menu.classList.remove("active");
+                document.body.style.overflow = "auto";
+
+                // Ако линкот е сидро (почнува со # или содржи #)
+                const href = link.getAttribute("href");
+                
+                if (href.includes("#")) {
+                    // Мала пауза за да дозволиме прелистувачот да го изврши скролот
+                    setTimeout(() => {
+                        const targetId = href.split("#")[1];
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            // Опционално: Мазно скролање до делот
+                            targetElement.scrollIntoView({ behavior: "smooth" });
+                        }
+                    }, 100);
+                }
             });
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            document.getElementById('aModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function toggleZoom(show) {
-            const zoom = document.getElementById('zoomOverlay');
-            zoom.style.display = show ? 'flex' : 'none';
-        }
-        
-        window.onclick = (e) => { if(e.target.id == 'aModal') closeModal(); }
-    </script>
+        });
+    }
+});
+</script>
 </body>
 </html>

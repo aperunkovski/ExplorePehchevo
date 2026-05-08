@@ -1,6 +1,5 @@
 
-
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Playfair+Display:ital,wght@1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
 
 
 
@@ -36,108 +35,77 @@ $white: #ffffff;
 $border: rgba(255, 255, 255, 0.1);
 
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-
-  height: 90px;
-  display: flex;
-  align-items: center;
-
-  border-bottom: 1px solid $border;
-  background: rgba(8, 18, 16, 0.6);
-  backdrop-filter: blur(8px);
-
-  overflow-x: hidden;
-
-  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    z-index: 1000;
+    background: rgba(8, 18, 16, 0.8);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
-    justify-content: space-between;
     align-items: center;
 
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-
-    padding: 0 40px;
-    gap: 20px;
+    // Главниот контејнер што ги држи логото лево, менито десно
+    .nav-wrapper {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+        display: flex;
+        justify-content: space-between; // Ова ги турка на краевите
+        align-items: center;
+    }
 
     .logo {
-      display: flex;
-      align-items: center;
-
-      img {
-        max-height: 65px;
-        width: auto;
-        display: block;
-        object-fit: contain;
-      }
-    }
-
-    nav {
-      margin-left: auto;
-
-      ul {
-        display: flex;
-        list-style: none;
-        gap: 45px;
-        margin: 0;
-        padding: 0;
-
-        li {
-          a {
-            text-decoration: none;
-            font-family: "Times New Roman", Times, serif;
-            color: $white;
-            font-size: 1.05rem;
-            font-weight: 500;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            transition: 0.3s ease;
-
-            &:hover {
-              color: $gold;
-            }
-          }
+        z-index: 1101;
+        img {
+            max-height: 60px;
+            width: auto;
+            display: block;
         }
-      }
-    }
-  }
-
-  /* BURGER (hidden desktop) */
-  .burger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    z-index: 1100;
-
-    span {
-      width: 26px;
-      height: 3px;
-      background: $white;
-      display: block;
-      transition: 0.3s ease;
     }
 
-    &.active {
-      span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-      }
-      span:nth-child(2) {
-        opacity: 0;
-      }
-      span:nth-child(3) {
-        transform: rotate(-45deg) translate(6px, -6px);
-      }
+    /* DESKTOP MENU */
+    #navMenu {
+        ul {
+            display: flex;
+            list-style: none;
+            gap: 45px;
+            margin: 0;
+            padding: 0;
+
+            li a {
+                text-decoration: none;
+                color: #fff;
+                font-family: "Times New Roman", Times, serif;
+                font-size: 1rem;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                transition: 0.3s;
+
+                &:hover {
+                    color: #e8c547;
+                }
+            }
+        }
     }
-  }
+
+    .burger {
+        display: none; // Скриен на десктоп
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        z-index: 1101;
+        span {
+            width: 26px;
+            height: 3px;
+            background: #fff;
+            transition: 0.3s;
+        }
+    }
 }
-
-/* ================= MOBILE ================= */
-
 
 
 
@@ -1169,10 +1137,235 @@ $border-glass: rgba(255, 255, 255, 0.1);
 
 
 
+/* MODAL OVERLAY ЗА TOP LOCATIONS - FINAL VERSION */
+.modal-overlay.activity-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 
+    &.active {
+        display: flex;
+    }
 
+    .modal-container {
+        background: #0a0e11;
+        width: 90%;
+        max-width: 950px;
+        height: 550px;
+        display: flex;
+        position: relative;
+        border: 1px solid #333;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 
+        .modal-left {
+            width: 45%;
+            height: 100%;
+            border-right: 1px solid #333;
+            overflow: hidden;
 
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+        }
+
+        .modal-right {
+            background: #0a2717; // Твојата оригинална зелена
+            width: 55%;
+            padding: 40px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+
+            .activity-type-tag {
+                color: #e8c547;
+                text-transform: uppercase;
+                font-family: 'Times New Roman', Times, serif; // Вратено на оригинал
+                font-weight: 700;
+                letter-spacing: 3px;
+                font-size: 0.8rem;
+                margin-bottom: 5px;
+                display: block;
+            }
+
+            h2 {
+                color: #fff;
+                text-transform: uppercase;
+                margin-bottom: 15px;
+                font-size: 1.8rem;
+                line-height: 1.2;
+                font-family: inherit; 
+            }
+
+            .activity-desc {
+                color: #bbb;
+                line-height: 1.6;
+                font-family: "Times New Roman", serif; // Вратено на оригинал
+                font-size: 1.05rem;
+                overflow-y: auto;
+                margin-bottom: 20px;
+                padding-right: 10px;
+
+                &::-webkit-scrollbar {
+                    width: 4px;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: #e8c547;
+                    border-radius: 4px;
+                }
+            }
+
+            /* КАРТИЧКИ СО ВЕКТОРИ */
+            .activity-meta {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+
+                .meta-item {
+                    background: rgba(255, 255, 255, 0.03);
+                    padding: 10px;
+                    border-left: 2px solid #e8c547;
+                    font-size: 0.85rem;
+                    color: #fff;
+
+                    span {
+                        color: #777;
+                        display: block;
+                        font-size: 0.7rem;
+                        text-transform: uppercase;
+                        margin-bottom: 2px;
+                    }
+
+                    /* Средување на векторите до текстот */
+                    .meta-value {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        
+                        i {
+                            color: #e8c547;
+                            font-size: 0.9rem;
+                            width: 15px;
+                            text-align: center;
+                        }
+
+                        b {
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+
+        /* CLOSE BUTTON (25x40 пропорција на иксот) */
+        .close-modal {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            width: 25px; 
+            height: 40px;
+            background: none;
+            border: none;
+            color: #e8c547;
+            font-size: 40px; // Зголемен за подобра видливост
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .modal-overlay.activity-modal {
+        padding: 60px 20px 20px 20px; // Простор за иксот горе
+
+        .modal-container {
+            flex-direction: column;
+            height: auto;
+            max-height: 90vh;
+            width: 100%;
+
+            .modal-left { 
+                width: 100%; 
+                height: 180px; 
+                border-right: none; 
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .modal-right { 
+                width: 100%; 
+                padding: 25px;
+                overflow-y: visible; // Да дозволи целиот контејнер да дише
+            }
+            
+            .close-modal {
+                top: -50px; // Иксот останува над контејнерот
+                right: 5px;
+                font-size: 40px;
+            }
+
+            .activity-meta {
+                gap: 8px;
+                margin-top: 15px;
+            }
+        }
+    }
+    @media (max-width: 768px) {
+    .modal-overlay.activity-modal {
+        padding: 60px 20px 20px 20px; // Простор за иксот горе
+
+        .modal-container {
+            flex-direction: column;
+            height: auto;
+            max-height: 90vh;
+            width: 100%;
+
+            .modal-left { 
+                width: 100%; 
+                height: 180px; 
+                border-right: none; 
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .modal-right { 
+                width: 100%; 
+                padding: 25px;
+                overflow-y: visible; // Да дозволи целиот контејнер да дише
+            }
+            
+            .close-modal {
+                top: -50px; // Иксот останува над контејнерот
+                right: 5px;
+                font-size: 40px;
+            }
+
+            .activity-meta {
+                gap: 8px;
+                margin-top: 15px;
+            }
+        }
+      }
+      }}
 
 /* ================= MOBILE (All Sections Combined) ================= */
 @media (max-width: 768px) {
@@ -1181,89 +1374,50 @@ $border-glass: rgba(255, 255, 255, 0.1);
     padding: 0 20px !important;
   }
 
-  // 1. Header
-  .header {
-    height: 70px;
+.header {
+        height: 70px;
 
-    .nav {
-      padding: 0 20px;
+        .nav-wrapper {
+            padding: 0 20px;
+        }
+
+        #navMenu {
+            position: fixed;
+            top: 0;
+            right: -100%; // Почнува од десно
+            width: 100%;
+            height: 100vh;
+            background: #081210;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1100;
+
+            &.active {
+                right: 0;
+                text-align: center;
+                align-items: center;
+              
+            }
+
+            ul {
+                flex-direction: column;
+                gap: 50px;
+                li a { font-size: 1.5rem; }
+                
+            }
+        }
+
+        .burger {
+            display: flex;
+            &.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+            &.active span:nth-child(2) { opacity: 0; }
+            &.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+        }
     }
 
-    /* ================= MENU ================= */
-    nav {
-      position: fixed;
-      top: 70px;
-      left: 0;
-      width: 100%;
-      height: 0;
-      overflow: hidden;
-
-      background: rgba(8, 18, 16, 0.98);
-      backdrop-filter: blur(12px);
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      transition: 0.5s ease;
-
-      ul {
-        display: flex;
-        flex-direction: column;
-        gap: 35px;
-        text-align: center;
-
-        li a {
-          font-family: "Times New Roman", Times, serif;
-          font-size: 1.4rem;
-          letter-spacing: 2px;
-          text-transform: uppercase;
-          color: #fff;
-          transition: 0.3s;
-
-          &:hover {
-            color: #e8c547;
-          }
-        }
-      }
-
-      /* OPEN STATE */
-      &.active {
-        height: calc(100vh - 70px);
-      }
-    }
-
-    /* ================= BURGER ================= */
-    .burger {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      z-index: 1100;
-
-      span {
-        width: 26px;
-        height: 3px;
-        background: #fff;
-        transition: 0.3s ease;
-      }
-
-      /* ANIMATION WHEN ACTIVE */
-      &.active {
-        span:nth-child(1) {
-          transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        span:nth-child(2) {
-          opacity: 0;
-        }
-
-        span:nth-child(3) {
-          transform: rotate(-45deg) translate(6px, -6px);
-        }
-      }
-    }
-  }
 
   // 2. Hero Section
   .hero {
