@@ -1560,58 +1560,31 @@ $border-glass: rgba(255, 255, 255, 0.1);
 
   // 4. Categories Slider
 .categories .grid {
-    display: flex !important; // Мора да биде flex за слајдерот
-    flex-direction: row !important; // Мора да биде во ред (хоризонтално)
-    flex-wrap: nowrap !important; // Спречува редење една под друга
+    /* Ова го чува слајдерот */
+    display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
-    gap: 15px;
-    padding: 0 20px;
-    width: 100%;
-    box-sizing: border-box;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    gap: 20px; 
+    padding: 20px 40px !important; /* Повеќе простор од страните за да се гледаат соседните картички */
 
     .card {
-      min-width: 75%; // Ова ја контролира големината на една картичка
-      height: 420px;
-      scroll-snap-align: center;
-      flex-shrink: 0; // Спречува картичките да се згмечат
+      /* НАМЕСТО 100%, користиме фиксен процент за да се гледа дека има следна картичка */
+      min-width: 75% !important; 
+      max-width: 80% !important; 
+      height: 380px !important; /* Малку намалена висина за да не го голтне екранот */
+      flex-shrink: 0;
       
-      /* НОВО: Ова го средува текстот да биде долу и порамнет */
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end; 
-      position: relative;
-      overflow: hidden;
-
-      .card-info {
-        position: relative; // Го тргаме absolute ако го имало
+      /* Центрирање */
+      scroll-snap-align: center;
+      
+      /* Средување на сликата внатре */
+      img {
         width: 100%;
-        padding: 30px 20px;
-        background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-        box-sizing: border-box;
-        
-        /* Фикс за порамнување на насловите */
-        min-height: 120px; 
-        display: flex;
-        align-items: center; 
-        justify-content: center;
-
-        h3 {
-          margin: 0;
-          text-align: center;
-          font-size: 1.4rem;
-          line-height: 1.2;
-          width: 100%;
-          white-space: normal; /* Дозволува насловот да оди во два реда ако е предолг */
-        }
+        height: 100%;
+        object-fit: cover;
       }
     }
   }
-
   // 5. Top Locations - НАМАЛЕНИ КАРТИЧКИ
  .top-locations {
   padding: 50px 0;
