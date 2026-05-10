@@ -68,7 +68,7 @@
 }
 
 .header .logo img {
-    max-height: 55px; /* Малку помало за да не гази надолу */
+    max-height: 60px; /* Малку помало за да не гази надолу */
     width: auto;
     display: block;
 }
@@ -81,7 +81,7 @@
 #navMenu ul {
     display: flex;
     list-style: none;
-    gap: 40px;
+    gap: 45px;
     margin: 0;
     padding: 0;
 }
@@ -89,7 +89,7 @@
 #navMenu ul li a {
     text-decoration: none;
     color: #ffffff;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-family: 'Times New Roman', Times, serif;
     font-weight: 500;
     letter-spacing: 1.5px;
@@ -347,7 +347,7 @@
         }
 /* --- МЕДИА КВЕРИ ЗА МОБИЛЕН (768px) --- */
 @media (max-width: 768px) {
-    /* Висина на хедерот на мобилен */
+  
     .header {
         height: 70px;
     }
@@ -430,6 +430,63 @@
     .burger.active span:nth-child(3) { 
         transform: rotate(-45deg) translate(5px, -6px); 
     }
+
+  
+    .service-modal {
+        padding: 10px; /* Помалку простор околу поп-апот */
+    }
+
+    .modal-content {
+        padding: 40px 20px; /* Помалку внатрешен простор */
+        max-height: 85vh; /* Ограничена висина */
+        overflow-y: auto; /* Скрол ако има повеќе локации */
+    }
+
+    .modal-header-wrap {
+        flex-direction: column; /* Иконата и насловот еден под друг */
+        gap: 10px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .modal-header-title {
+        font-size: 1.4rem; /* Помал наслов */
+    }
+
+    /* Главната промена: Картичките во колона */
+    .location-cards-wrapper {
+        flex-direction: column; 
+        align-items: center;
+        gap: 30px;
+    }
+
+    .location-entry-card {
+        width: 100%; /* Ја зафаќа цела ширина */
+        max-width: 350px; /* Но не дозволува да стане преголема */
+        height: auto; /* Висината да се прилагоди според содржината */
+        min-height: 350px;
+    }
+
+    .loc-img {
+        height: 180px; /* Фиксна висина за сликата на мобилен */
+    }
+
+    .loc-content {
+        padding: 20px;
+        height: auto;
+    }
+
+    .loc-content h4 {
+        font-size: 0.9rem;
+    }
+
+    /* Позиција на X копчето да биде подостапно */
+    .close-modal {
+        top: -45px;
+        right: 5px;
+        font-size: 28px;
+    }
+
 }
     </style>
 </head>

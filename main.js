@@ -63,6 +63,78 @@ navLinks.forEach(link => {
 
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- 1. АВТОМАТСКО ДОДАВАЊЕ НА CSS СТИЛОВИ ЗА АНИМАЦИЈА ---
+    // Ова ги заменува класите во CSS за да не мораш ти да ги пишуваш
+    const style = document.createElement('style');
+    style.textContent = `
+        .js-reveal {
+            opacity: 0 !important;
+            transform: translateY(40px) scale(0.95) !important;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        }
+        .js-reveal-active {
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) !important;
+        }
+        @keyframes js-float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // --- 2. INTERSECTION OBSERVER ЗА СУПТИЛНО ПОЈАВУВАЊЕ ---
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('js-reveal-active');
+                
+                // Ако е картичка во About, додај и лебдечка анимација откако ќе се појави
+                if (entry.target.classList.contains('feature-item')) {
+                    setTimeout(() => {
+                        entry.target.style.animation = "js-float 4s ease-in-out infinite";
+                    }, 800);
+                }
+            }
+        });
+    }, observerOptions);
+
+    // Селектирај ги сите картички и елементи што треба да бидат "smooth"
+    const targets = document.querySelectorAll('.feature-item, .card, .loc-item, .activity-card, .service-horizontal-card');
+    
+    targets.forEach(el => {
+        el.classList.add('js-reveal'); // Постави почетна состојба
+        scrollObserver.observe(el);
+    });
+
+    // --- 3. FIX ЗА OVERFLOW (Преку JS) ---
+    // Ова гарантира дека ништо нема да бега лево-десно на мобилен
+    if (window.innerWidth <= 768) {
+        document.documentElement.style.overflowX = 'hidden';
+        document.body.style.overflowX = 'hidden';
+        
+        // Автоматско поправање на ширината на футерот и хедерот
+        const fullWidthElements = document.querySelectorAll('.header, .main-footer, .hero');
+        fullWidthElements.forEach(el => {
+            el.style.width = '100%';
+            el.style.boxSizing = 'border-box';
+        });
+    }
+
+});
+
+
+
+
+
 
 
 

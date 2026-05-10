@@ -658,53 +658,93 @@
         <img src="" id="zoomImg" style="max-width:90%; max-height:90%; object-fit:contain;">
     </div>
 
-    <!-- ================= SCROLL & BURGER SCRIPT ================= -->
-<script>
+  <script>
 document.addEventListener("DOMContentLoaded", () => {
+    // --- 1. МЕНИ & БУРГЕР ---
     const burger = document.querySelector(".burger");
     const menu = document.getElementById("navMenu");
     const navLinks = document.querySelectorAll("#navMenu ul li a");
 
     if (burger && menu) {
-        // 1. Клик на Бургерот (Open/Close)
         burger.addEventListener("click", () => {
             burger.classList.toggle("active");
             menu.classList.toggle("active");
-            
-            // Спречува скролање на позадината кога менито е отворено
-            if (menu.classList.contains("active")) {
-                document.body.style.overflow = "hidden";
-            } else {
-                document.body.style.overflow = "auto";
-            }
+            document.body.style.overflow = menu.classList.contains("active") ? "hidden" : "auto";
         });
 
-        // 2. Логика за линковите (Истражи, Топ Локации...)
         navLinks.forEach(link => {
-            link.addEventListener("click", (e) => {
-                // Прво го затвораме менито
+            link.addEventListener("click", () => {
                 burger.classList.remove("active");
                 menu.classList.remove("active");
                 document.body.style.overflow = "auto";
-
-                // Ако линкот е сидро (почнува со # или содржи #)
-                const href = link.getAttribute("href");
-                
-                if (href.includes("#")) {
-                    // Мала пауза за да дозволиме прелистувачот да го изврши скролот
-                    setTimeout(() => {
-                        const targetId = href.split("#")[1];
-                        const targetElement = document.getElementById(targetId);
-                        
-                        if (targetElement) {
-                            // Опционално: Мазно скролање до делот
-                            targetElement.scrollIntoView({ behavior: "smooth" });
-                        }
-                    }, 100);
-                }
             });
         });
     }
+
+    // --- 2. МОДАЛ ЗА СМЕСТУВАЊЕ (Accomodation) ---
+    // Оваа функција ги полни податоците во модалот на оваа страница
+    window.openModal = function(btn) {
+        const modal = document.getElementById('aModal');
+        
+        // Пополнување на текст
+        document.getElementById('mTitle').innerText = btn.getAttribute('data-title');
+        document.getElementById('mCap').innerText = btn.getAttribute('data-cap');
+        document.getElementById('mPark').innerText = btn.getAttribute('data-park');
+        document.getElementById('mIn').innerText = btn.getAttribute('data-in');
+        document.getElementById('mOut').innerText = btn.getAttribute('data-out');
+        document.getElementById('mTel').innerText = btn.getAttribute('data-tel');
+        document.getElementById('mLoc').innerText = btn.getAttribute('data-loc');
+
+        // Слики
+        const imgs = btn.getAttribute('data-imgs').split(',');
+        const mImg = document.getElementById('mImg');
+        const mThumbs = document.getElementById('mThumbs');
+
+        mImg.src = imgs[0];
+        mThumbs.innerHTML = '';
+
+        imgs.forEach((src, idx) => {
+            const thumb = document.createElement('img');
+            thumb.src = src;
+            if (idx === 0) thumb.className = 'active';
+            thumb.onclick = function() {
+                mImg.src = src;
+                document.querySelectorAll('.thumb-grid img').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+            };
+            mThumbs.appendChild(thumb);
+        });
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeModal = function() {
+        document.getElementById('aModal').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    };
+
+    // --- 3. ЗУМ НА СЛИКИ ---
+    window.toggleZoom = function(show) {
+        const zoomOverlay = document.getElementById('zoomOverlay');
+        const zoomImg = document.getElementById('zoomImg');
+        const mainImg = document.getElementById('mImg');
+        
+        if (show) {
+            zoomImg.src = mainImg.src;
+            zoomOverlay.style.display = 'flex';
+        } else {
+            zoomOverlay.style.display = 'none';
+        }
+    };
+
+    // Затворање на клик надвор од модалот
+    window.onclick = function(event) {
+        const modal = document.getElementById('aModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    };
 });
 </script>
 </body>

@@ -595,21 +595,13 @@
         </div>
     </div>
 
-  <script>
+ <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // --- СЕЛЕКТОРИ ЗА МЕНИ ---
+    // --- БУРГЕР МЕНИ ---
     const burger = document.querySelector(".burger");
     const menu = document.getElementById("navMenu");
     const navLinks = document.querySelectorAll("#navMenu ul li a");
 
-    // --- СЕЛЕКТОРИ ЗА МОДАЛИ ---
-    const activityModal = document.getElementById('activityModal');
-    const gModal = document.getElementById('gModal');
-    const productModal = document.getElementById('productModal');
-
-    // ==========================================
-    // 1. БУРГЕР МЕНИ ЛОГИКА
-    // ==========================================
     if (burger && menu) {
         burger.addEventListener("click", () => {
             burger.classList.toggle("active");
@@ -626,23 +618,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ==========================================
-    // 2. МОДАЛ ЗА ПРОДУКТИ (productModal)
-    // ==========================================
-    window.openProductModal = function(btn) {
+    // --- МОДАЛ ЛОГИКА ---
+    const productModal = document.getElementById('productModal');
+
+    // Оваа функција сега се вика openModal за да се совпадне со твојот HTML
+    window.openModal = function(btn) {
         if (!productModal) return;
         
+        // Пополнување податоци
         document.getElementById('modalTitle').innerText = btn.getAttribute('data-title');
         document.getElementById('modalTag').innerText = btn.getAttribute('data-tag');
         document.getElementById('modalDesc').innerText = btn.getAttribute('data-desc');
         document.getElementById('modalLoc').innerText = btn.getAttribute('data-loc');
         document.getElementById('modalPhone').innerText = btn.getAttribute('data-phone');
 
+        // Слики
         const img1 = btn.getAttribute('data-img1');
         const img2 = btn.getAttribute('data-img2');
         const img3 = btn.getAttribute('data-img3');
 
         document.getElementById('modalMainImg').src = img1;
+        
         const thumbs = document.querySelectorAll('.t-img');
         if (thumbs.length >= 3) {
             thumbs[0].src = img1;
@@ -656,98 +652,23 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.style.overflow = 'hidden';
     };
 
-    window.closeProductModal = function() {
+    window.closeModal = function() {
         if (productModal) productModal.classList.remove('active');
         document.body.style.overflow = 'auto';
     };
 
-    window.changeProductImg = function(src, el) {
+    // Функција за менување слики (се совпаѓа со onclick во HTML)
+    window.changeImg = function(src, el) {
         document.getElementById('modalMainImg').src = src;
         document.querySelectorAll('.t-img').forEach(t => t.classList.remove('active'));
         el.classList.add('active');
     };
 
-    // ==========================================
-    // 3. МОДАЛ ЗА ГАЛЕРИЈА / РЕСТОРАНИ (gModal)
-    // ==========================================
-    window.openModal = function(btn) {
-        if (!gModal) return;
-        
-        document.getElementById('mTitle').innerText = btn.dataset.title;
-        document.getElementById('mWork').innerText = btn.dataset.work;
-        document.getElementById('mTerace').innerText = btn.dataset.terace;
-        document.getElementById('mCard').innerText = btn.dataset.card;
-        document.getElementById('mCuisine').innerText = btn.dataset.cuisine;
-        document.getElementById('mLoc').innerText = btn.dataset.loc;
-        document.getElementById('mTel').innerText = btn.dataset.tel;
-
-        const imgs = btn.dataset.imgs.split(',');
-        document.getElementById('mImg').src = imgs[0];
-        document.getElementById('zoomImg').src = imgs[0];
-
-        const thumbsBox = document.getElementById('mThumbs');
-        if (thumbsBox) {
-            thumbsBox.innerHTML = '';
-            imgs.slice(0, 6).forEach((img, index) => {
-                const imgEl = document.createElement('img');
-                imgEl.src = img;
-                if (index === 0) imgEl.classList.add('active');
-                imgEl.onclick = function () {
-                    document.getElementById('mImg').src = this.src;
-                    document.getElementById('zoomImg').src = this.src;
-                    document.querySelectorAll('#mThumbs img').forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                };
-                thumbsBox.appendChild(imgEl);
-            });
-        }
-
-        gModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    };
-
-    window.closeModal = function() {
-        if (gModal) gModal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    };
-
-    // ==========================================
-    // 4. МОДАЛ ЗА АКТИВНОСТИ (activityModal)
-    // ==========================================
-    window.openActivityModal = function(btn) {
-        if (!activityModal) return;
-        
-        document.getElementById('act-title').innerText = btn.getAttribute('data-title');
-        document.getElementById('act-type').innerText = btn.getAttribute('data-type');
-        document.getElementById('act-desc').innerText = btn.getAttribute('data-desc');
-        document.getElementById('act-location').innerText = btn.getAttribute('data-loc');
-        document.getElementById('act-diff').innerText = btn.getAttribute('data-diff');
-        document.getElementById('act-time').innerText = btn.getAttribute('data-time');
-        document.getElementById('act-gear').innerText = btn.getAttribute('data-gear');
-        document.getElementById('act-img').src = btn.getAttribute('data-img');
-        
-        activityModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    };
-
-    window.closeActivityModal = function() {
-        if (activityModal) activityModal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    };
-
-    // ==========================================
-    // 5. ГЛОБАЛНИ ФУНКЦИИ (Zoom & Close)
-    // ==========================================
-    window.toggleZoom = function(show) {
-        const zoom = document.getElementById('zoomOverlay');
-        if (zoom) zoom.style.display = show ? 'flex' : 'none';
-    };
-
+    // Затворање на клик надвор од модалот
     window.onclick = (e) => {
-        // Затворање на клик во празно (позадина)
-        if (e.target == productModal) closeProductModal();
-        if (e.target == gModal) closeModal();
-        if (e.target == activityModal) closeActivityModal();
+        if (e.target == productModal) {
+            closeModal();
+        }
     };
 });
 </script>

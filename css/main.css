@@ -1413,19 +1413,50 @@ body {
 }
 @media (max-width: 768px) {
   .categories .grid {
-    display: flex;
-    overflow-x: auto;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
     scroll-snap-type: x mandatory;
     gap: 15px;
     padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .categories .grid::-webkit-scrollbar {
     display: none;
   }
   .categories .grid .card {
-    min-width: 70%;
+    min-width: 75%;
     height: 420px;
     scroll-snap-align: center;
+    flex-shrink: 0;
+    /* НОВО: Ова го средува текстот да биде долу и порамнет */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+  }
+  .categories .grid .card .card-info {
+    position: relative;
+    width: 100%;
+    padding: 30px 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    box-sizing: border-box;
+    /* Фикс за порамнување на насловите */
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .categories .grid .card .card-info h3 {
+    margin: 0;
+    text-align: center;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    width: 100%;
+    white-space: normal; /* Дозволува насловот да оди во два реда ако е предолг */
   }
   .top-locations {
     padding: 50px 0;
